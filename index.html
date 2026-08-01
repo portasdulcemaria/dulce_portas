@@ -458,13 +458,6 @@ body.loaded .hero-h1 em::after { width: 100%; }
   font-size: 0.72rem; color: var(--muted); line-height: 1.5;
   margin-top: 0.25rem;
 }
-@media (max-width: 640px) {
-  .mbar-grid { grid-template-columns: 1fr 1fr; }
-  .mbar-cell:nth-child(2) { border-right: none; }
-  .mbar-cell:nth-child(1),
-  .mbar-cell:nth-child(2) { border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
-}
-
 /* ── SHARED REVEAL ── */
 .rv {
   opacity: 0; transform: translateY(22px);
@@ -935,31 +928,61 @@ body.loaded .hero-h1 em::after { width: 100%; }
 #pilares { background: var(--bg); padding: 6rem 2rem; border-top: 1px solid var(--border); }
 .pilares-wrap { max-width: var(--max-w); margin: 0 auto; }
 .pilares-header { margin-bottom: 3rem; max-width: 540px; }
-.pilares-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 0 4rem; border-top: 1px solid var(--border);
-}
-.pilar {
-  padding: 2rem 0; border-bottom: 1px solid var(--border);
-  display: flex; flex-direction: column; gap: 0.55rem;
+
+/* Layout B: hero + sub-grid */
+.pilares-b { display: flex; flex-direction: column; gap: 0.75rem; }
+
+.pilar-hero {
+  background: var(--ink); border-radius: 20px;
+  padding: 2.4rem 2.8rem;
+  display: grid; grid-template-columns: 1fr auto; gap: 2rem; align-items: center;
   opacity: 0; transform: translateY(14px);
   transition: opacity 0.55s ease, transform 0.55s ease;
 }
-.pilar.v-in { opacity:1; transform: none; }
-.pilar:nth-child(odd) { padding-right: 2rem; }
-.pilar:nth-child(even) { padding-left: 2rem; border-left: 1px solid var(--border); }
-.pilar-n {
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--amber);
+.pilar-hero.v-in { opacity: 1; transform: none; }
+.pilar-hero-eyebrow {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; color: rgba(237,179,60,0.8); margin-bottom: 0.6rem;
 }
-.pilar-t {
-  font-size: 1.02rem; font-weight: 700; letter-spacing: -0.02em;
-  color: var(--ink); line-height: 1.28;
+.pilar-hero-title {
+  font-size: 1.35rem; font-weight: 800; letter-spacing: -0.03em;
+  line-height: 1.2; color: white; margin-bottom: 0.7rem;
 }
-.pilar-d { font-size: 0.83rem; color: var(--muted); line-height: 1.7; }
+.pilar-hero-desc { font-size: 0.88rem; color: rgba(255,255,255,0.5); line-height: 1.72; max-width: 520px; }
+.pilar-hero-bg-num {
+  font-size: 7rem; font-weight: 800; letter-spacing: -0.05em;
+  color: rgba(255,255,255,0.04); line-height: 1;
+  user-select: none; pointer-events: none; flex-shrink: 0;
+}
+
+.pilar-sub-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;
+}
+.pilar-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 16px;
+  padding: 1.5rem 1.75rem; display: flex; gap: 1.1rem; align-items: flex-start;
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 0.55s ease, transform 0.55s ease, border-color 0.22s;
+}
+.pilar-card.v-in { opacity: 1; transform: none; }
+.pilar-card:hover { border-color: rgba(28,75,67,0.2); }
+.pilar-card-wide { grid-column: span 2; }
+.pilar-card-n {
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--amber); flex-shrink: 0; padding-top: 2px;
+}
+.pilar-card-t {
+  font-size: 0.95rem; font-weight: 700; letter-spacing: -0.02em;
+  color: var(--ink); line-height: 1.28; margin-bottom: 0.35rem;
+}
+.pilar-card:hover .pilar-card-t { color: var(--teal); transition: color 0.25s; }
+.pilar-card-d { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
 @media (max-width: 640px) {
-  .pilares-grid { grid-template-columns: 1fr; }
-  .pilar:nth-child(odd), .pilar:nth-child(even) { padding: 1.5rem 0; border-left: none; border-right: none; }
+  .pilar-hero { grid-template-columns: 1fr; padding: 1.8rem; }
+  .pilar-hero-bg-num { display: none; }
+  .pilar-sub-grid { grid-template-columns: 1fr; }
+  .pilar-card-wide { grid-column: span 1; }
 }
 
 /* ── TRAYECTORIA ── */
@@ -1005,73 +1028,109 @@ body.loaded .hero-h1 em::after { width: 100%; }
 }
 
 /* ── RECOMENDACIONES ── */
-#recos { background: var(--bg); padding: 6rem 2rem; border-top: 1px solid var(--border); }
-.recos-wrap { max-width: var(--max-w); margin: 0 auto; }
+#recos { background: var(--bg); padding: 5rem 2rem; border-top: 1px solid var(--border); }
+.recos-wrap { max-width: 800px; margin: 0 auto; }
 .recos-header { margin-bottom: 3rem; }
-.recos-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
-}
-@media (max-width: 720px) { .recos-grid { grid-template-columns: 1fr; } }
-.reco-card {
-  background: var(--white); border: 1px solid var(--border);
-  border-radius: 18px; padding: 1.8rem;
-  display: flex; flex-direction: column; gap: 1.2rem;
-  opacity: 0; transform: translateY(14px);
-  transition: opacity 0.55s ease, transform 0.55s ease, box-shadow 0.3s, border-color 0.3s;
-}
-.reco-card.v-in { opacity:1; transform:none; }
-.reco-card:hover { box-shadow: 0 8px 36px rgba(0,0,0,0.06); border-color: var(--border-mid); }
-.reco-feat { grid-column: span 2; padding: 2.2rem; background: var(--white); }
-.reco-qmark {
+
+/* ── Quote slider ── */
+.qs-track { position: relative; }
+@keyframes qsFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+.qs-slide { display: none; flex-direction: column; }
+.qs-slide.qs-active { display: flex; animation: qsFadeIn 0.45s ease forwards; }
+.qs-qmark {
   font-family: Georgia, 'Times New Roman', serif;
-  font-size: 3.2rem; line-height: 0.8;
-  color: var(--amber); opacity: 0.55; margin-bottom: 0.4rem;
+  font-size: 5rem; line-height: 0.65;
+  color: var(--amber); opacity: 0.4;
+  margin-bottom: 1.4rem; user-select: none;
 }
-.reco-text { font-size: 0.9rem; color: var(--ink-mid); line-height: 1.8; flex: 1; }
-.reco-feat .reco-text { font-size: 1rem; }
-.reco-author {
-  display: flex; align-items: center; gap: 0.85rem;
-  padding-top: 1rem; border-top: 1px solid var(--border);
+.qs-text {
+  font-size: clamp(1rem, 1.8vw, 1.15rem);
+  color: var(--ink-mid); line-height: 1.85;
+  margin-bottom: 2rem; font-style: italic;
 }
-.r-av {
-  width: 34px; height: 34px; border-radius: 50%;
+.qs-author { display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap; }
+.qs-av {
+  width: 36px; height: 36px; border-radius: 50%;
   background: var(--teal); flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
   font-size: 0.72rem; font-weight: 700; color: white;
 }
-.r-name { font-size: 0.83rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
-.r-role { font-size: 0.7rem; color: var(--muted); line-height: 1.3; }
-.r-rel {
-  font-size: 0.6rem; font-weight: 700;
-  letter-spacing: 0.07em; text-transform: uppercase; color: var(--teal);
-  padding: 0.15rem 0.55rem; border-radius: 100px;
+.qs-name { font-size: 0.85rem; font-weight: 700; color: var(--ink); line-height: 1.2; }
+.qs-role { font-size: 0.72rem; color: var(--muted); line-height: 1.3; }
+.qs-rel {
+  font-size: 0.6rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase;
+  color: var(--teal); padding: 0.15rem 0.55rem; border-radius: 100px;
   background: rgba(28,75,67,0.07); white-space: nowrap;
 }
+.qs-controls {
+  display: flex; align-items: center; gap: 1.2rem;
+  margin-top: 2.8rem;
+}
+.qs-dots { display: flex; gap: 6px; }
+.qs-dot {
+  height: 5px; width: 5px; border-radius: 100px;
+  background: var(--border-mid); cursor: pointer;
+  transition: width 0.35s ease, background 0.35s ease;
+}
+.qs-dot.qs-dot-active { width: 22px; background: var(--teal); }
+.qs-btn {
+  width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid var(--border-mid); background: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--muted); font-size: 0.85rem;
+  transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  margin-left: auto;
+}
+.qs-btn:hover { border-color: var(--teal); color: var(--teal); transform: scale(1.06); }
+.qs-prev { margin-left: auto; }
+.qs-next { margin-left: 0; }
 
 /* ── CONTACTO ── */
-#contacto { background: var(--ink); padding: 6rem 2rem; }
+#contacto { background: var(--ink); padding: 7rem 2rem; }
 .contacto-grid {
-  max-width: var(--max-w); margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+  max-width: 720px; margin: 0 auto;
+  display: flex; flex-direction: column; gap: 2.5rem;
+}
+.contacto-eyebrow {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--amber); opacity: 0.75; margin-bottom: 0.5rem;
+}
+.contacto-q {
+  font-size: 0.8rem; font-weight: 500; color: rgba(255,255,255,0.3);
+  letter-spacing: -0.01em; margin-bottom: 1rem;
 }
 .contacto-grid h2 {
-  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
-  font-weight: 800; letter-spacing: -0.045em; line-height: 1.08; color: white; margin-bottom: 1rem;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 800; letter-spacing: -0.045em; line-height: 1.1; color: white; margin-bottom: 1rem;
 }
 .contacto-grid h2 em { font-style: normal; color: var(--amber); }
-.contacto-grid p { font-size: 0.93rem; color: rgba(255,255,255,0.45); line-height: 1.75; max-width: 360px; }
-.c-btns { display: flex; flex-direction: column; gap: 0.9rem; }
-.c-btn {
-  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
-  padding: 1.05rem 1.4rem; border-radius: 14px;
-  text-decoration: none; font-size: 0.88rem; font-weight: 600;
-  transition: opacity 0.2s, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+.contacto-pillars {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.22); margin-bottom: 1.4rem;
 }
-.c-btn:hover { opacity: 0.85; transform: translateX(5px); }
-.c-btn-li { background: #0077b5; color: white; }
-.c-btn-em { background: rgba(255,255,255,0.07); color: rgba(255,255,255,0.8); border: 1px solid rgba(255,255,255,0.1); }
+.contacto-grid p { font-size: 0.92rem; color: rgba(255,255,255,0.45); line-height: 1.82; }
+/* Contact icons — opción A */
+.c-btns { display: flex; flex-direction: row; align-items: center; gap: 1.6rem; }
+.c-icons { display: contents; }
+.c-icon {
+  display: flex; align-items: center;
+  color: rgba(255,255,255,0.6); text-decoration: none;
+  transition: color 0.22s, transform 0.25s cubic-bezier(0.22,1,0.36,1);
+}
+.c-icon:hover { color: white; transform: translateY(-2px) scale(1.12); }
+.c-icon svg { width: 22px; height: 22px; fill: currentColor; }
+.c-email {
+  font-size: 0.7rem; color: rgba(255,255,255,0.38); letter-spacing: 0.03em;
+  font-family: var(--font); background: none; border: none; cursor: pointer; padding: 0;
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.12);
+  text-underline-offset: 3px;
+  transition: color 0.22s, text-decoration-color 0.22s;
+}
+.c-email:hover { color: rgba(255,255,255,0.72); text-decoration-color: rgba(255,255,255,0.35); }
+.c-email.c-copied { color: var(--amber); text-decoration-color: rgba(237,179,60,0.35); }
 @media (max-width: 720px) {
-  .contacto-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .contacto-grid { gap: 2rem; }
 }
 
 /* ── FOOTER ── */
@@ -1159,11 +1218,7 @@ footer {
 .c-link svg, .c-link-arr { display: inline-block; transition: transform 0.22s cubic-bezier(0.22,1,0.36,1); }
 .c-link:hover .c-link-arr { transform: translateX(4px); }
 
-/* Pilar title teal on hover */
-.pilar { cursor: default; }
-.pilar:hover .pilar-t { color: var(--teal); transition: color 0.25s; }
-.pilar:hover .pilar-n { opacity: 1; transition: opacity 0.25s; }
-.pilar-n { opacity: 0.7; transition: opacity 0.25s; }
+/* Pilar card hover — handled in .pilar-card CSS */
 
 /* Timeline dot fills amber on item hover */
 .tray-item { cursor: default; }
@@ -1174,12 +1229,7 @@ footer {
 }
 .t-dot { transition: background 0.25s, outline-color 0.25s; }
 
-/* Reco quote mark scales on hover */
-.reco-qmark {
-  transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), opacity 0.3s;
-  display: inline-block;
-}
-.reco-card:hover .reco-qmark { transform: scale(1.12) translateY(-2px); opacity: 0.75; }
+/* (reco-card hover removed — now quote slider) */
 
 /* About cards lift */
 .acard {
@@ -1192,10 +1242,8 @@ footer {
   transform: translateY(-2px);
 }
 
-/* Contact buttons glow */
-.c-btn { transition: opacity 0.2s, transform 0.28s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s; }
-.c-btn-li:hover { box-shadow: 0 10px 28px rgba(0,119,181,0.28); }
-.c-btn-em:hover { border-color: rgba(255,255,255,0.22) !important; }
+/* Contact primary glow */
+.c-primary:hover { box-shadow: 0 10px 28px rgba(28,75,67,0.22); }
 
 /* Button primary hover glow */
 .btn-pill {
@@ -1215,99 +1263,95 @@ footer {
 
 
 /* ──────────────────────────────────────────────────
-   RESPONSIVE — sistema completo de breakpoints
-   1024 → tablet landscape / pequeño desktop
-   780  → tablet portrait (ya existía, completado)
-   640  → mobile (ya existía, completado)
+   RESPONSIVE
+   1024 → tablet landscape
+   780  → tablet portrait
+   640  → mobile
    480  → mobile chico
 ────────────────────────────────────────────────── */
 
-/* 1024px — tablet landscape */
+/* 1024px */
 @media (max-width: 1024px) {
-  /* Hero: reducir gap y tamaños */
-  .hero-inner { gap: 3rem; }
-  /* Trayectoria: título + lista más ajustados */
-  .tray-wrap { grid-template-columns: 220px 1fr; gap: 3rem; }
-  /* Contacto: columnas menos separadas */
-  .contacto-grid { gap: 3rem; }
-  /* Casos: cards con menos gap */
+  .hero-inner { gap: 2.5rem; }
+  .tray-wrap { grid-template-columns: 200px 1fr; gap: 3rem; }
   .casos-grid { gap: 1rem; }
-  /* About: columnas más proporcionales */
   .about-main { gap: 3rem; }
-  /* Métricas: padding interior más ajustado */
   .mbar-cell { padding: 0 1.2rem; }
   .mbar-num { font-size: 2.5rem; }
 }
 
-/* 780px — tablet portrait */
+/* 780px */
 @media (max-width: 780px) {
-  /* sections: menos padding vertical */
-  #about, #casos, #pilares, #trayectoria, #recos, #contacto {
-    padding: 4rem 1.5rem;
-  }
+  #about, #casos, #pilares, #trayectoria, #recos, #contacto { padding: 4rem 1.5rem; }
   #metrics-bar { padding: 2.5rem 1.5rem; }
-  /* hero */
-  .hero-section { padding: 5rem 1.5rem 4rem; }
-  /* s-title: tamaño */
+  #hero { padding: 7rem 1.5rem 3rem; }
   .s-title .t-muted, .s-title .t-teal { font-size: clamp(1.5rem, 4vw, 2.2rem); }
-  /* casos-top: apila */
   .casos-top { flex-direction: column; align-items: flex-start; gap: 1rem; }
   .casos-top > p.s-desc { max-width: 100%; padding-top: 0; }
-  /* pilares header: menos ancho */
   .pilares-header { margin-bottom: 2rem; }
-  /* recos featured: full row */
-  .reco-feat { padding: 1.75rem; }
+  .qs-text { font-size: 1rem; }
+  .contacto-grid { gap: 2rem; }
 }
 
 /* 640px — mobile */
 @media (max-width: 640px) {
   /* nav */
   .nav-links a:not(.nav-cta) { display: none; }
-  /* hero: foto más pequeña */
-  .hero-photo-wrap { width: 120px; height: 120px; }
-  /* about: colapsa a columna */
+
+  /* hero: foto centrada encima, texto debajo */
+  #hero { padding: 6rem 1.5rem 3rem; }
+  .hero-inner {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    text-align: center;
+  }
+  .hero-right { order: -1; }
+  .hero-photo-wrap { width: 130px; height: 130px; }
+  .hero-left { text-align: left; }
+  .hero-sub, .hero-sub-2 { max-width: 100%; }
+  .hero-ctas { flex-wrap: wrap; }
+  .scroll-cue { display: none; }
+
+  /* metrics */
+  .mbar-grid { grid-template-columns: 1fr 1fr; }
+  .mbar-cell:nth-child(2) { border-right: none; }
+  .mbar-cell:nth-child(1),
+  .mbar-cell:nth-child(2) { border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+
+  /* about */
   .about-main { grid-template-columns: 1fr; gap: 2.5rem; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
-  /* casos: una columna */
+  .about-title-line2 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+  /* casos */
   .casos-grid { grid-template-columns: 1fr; }
-  /* recos: una columna */
-  .recos-grid { grid-template-columns: 1fr; }
-  .reco-feat { grid-column: span 1; }
-  /* trayectoria: una columna */
+
+  /* trayectoria */
   .tray-wrap { grid-template-columns: 1fr; gap: 2rem; }
-  /* pilares: una columna */
-  .pilares-grid { grid-template-columns: 1fr; }
-  .pilar { padding: 1.5rem 0; border-left: none; border-right: none; }
-  /* contacto: una columna */
-  .contacto-grid { grid-template-columns: 1fr; gap: 2.5rem; }
-  /* about title: más pequeño */
-  .about-title-line1, .about-title-line2 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
+
+  /* contacto */
+  .c-btns { flex-wrap: wrap; gap: 1rem; }
 }
 
-/* 480px — mobile chico */
+/* 480px */
 @media (max-width: 480px) {
-  /* secciones: menos padding */
-  #about, #casos, #pilares, #trayectoria, #recos, #contacto {
-    padding: 3rem 1.2rem;
-  }
+  #about, #casos, #pilares, #trayectoria, #recos, #contacto { padding: 3rem 1.2rem; }
   #metrics-bar { padding: 2rem 1.2rem; }
-  .hero-section { padding: 4rem 1.2rem 3rem; }
-  /* métricas: 1 columna */
-  .mbar-grid { grid-template-columns: 1fr 1fr; }
+  #hero { padding: 5.5rem 1.2rem 3rem; }
   .mbar-cell { padding: 1.2rem 0; border-right: none; border-bottom: 1px solid var(--border); }
   .mbar-cell:last-child { border-bottom: none; }
-  /* hero chips: 2 max */
-  .hero-chips .hchip:nth-child(n+3) { display: none; }
-  /* about tags: compact */
+  .hero-chips .hchip:nth-child(n+4) { display: none; }
   .at { font-size: 0.7rem; }
-  /* s-title global */
   .s-title { font-size: clamp(1.4rem, 5.5vw, 2rem); }
+  .contacto-grid h2 { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+  .qs-qmark { font-size: 3.5rem; }
+  .qs-text { font-size: 0.95rem; }
 }
 
 /* ── REDUCED MOTION ── */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  .rv, .mbar-cell, .pilar, .reco-card, .tray-item { opacity:1; transform:none; }
+  .rv, .mbar-cell, .pilar, .tray-item { opacity:1; transform:none; }
   .hero-h1, .hero-sub, .hero-sub-2, .hero-ctas, .hero-chips, .scroll-cue { opacity: 1; animation: none; }
 }
 </style>
@@ -1344,7 +1388,7 @@ footer {
            onerror="this.style.display='none'">
     </div>
     <div class="hero-photo-name">Dulce Portas</div>
-    <div class="hero-photo-role">Head of Product Design · VP Design · CDO</div>
+    <div class="hero-photo-role">Design Leadership · Fintech & Banca Digital</div>
   </div>
   </div><!-- end hero-inner -->
 </section>
@@ -1695,39 +1739,59 @@ footer {
   <div class="pilares-wrap">
     <div class="pilares-header rv">
       <div class="s-eyebrow">Enfoque de liderazgo</div>
-      <div class="s-title"><span class="t-muted">Lo que traigo</span><span class="t-teal"><em>a cada rol</em></span></div>
+      <div class="s-title"><span class="t-muted" style="display:inline">Lo que traigo</span> <span class="t-teal" style="display:inline"><em>a cada rol</em></span></div>
     </div>
-    <div class="pilares-grid">
-      <div class="pilar">
-        <div class="pilar-n">01</div>
-        <div class="pilar-t">Diseño como argumento estratégico</div>
-        <div class="pilar-d">Traduzco la visión del equipo en lenguaje ejecutivo. Presento al CEO, negocio con stakeholders y convierto el trabajo de diseño en decisiones de producto.</div>
+    <div class="pilares-b">
+
+      <!-- Hero pilar 01 -->
+      <div class="pilar-hero rv">
+        <div>
+          <div class="pilar-hero-eyebrow">01 · Pilar central</div>
+          <div class="pilar-hero-title">Diseño como argumento estratégico</div>
+          <div class="pilar-hero-desc">Traduzco la visión del equipo en lenguaje ejecutivo. Presento al CEO, negocio con stakeholders y convierto el trabajo de diseño en decisiones de producto.</div>
+        </div>
+        <div class="pilar-hero-bg-num">01</div>
       </div>
-      <div class="pilar">
-        <div class="pilar-n">02</div>
-        <div class="pilar-t">Equipos que escalan sin perder calidad</div>
-        <div class="pilar-d">Crecí el equipo de 6 a 14 personas manteniendo CSAT en ascenso. Sé qué contratar, cómo desarrollar seniority y cuándo bajar velocidad para subir el nivel.</div>
+
+      <!-- Sub grid 2×2 + wide -->
+      <div class="pilar-sub-grid">
+        <div class="pilar-card rv rv-d1">
+          <span class="pilar-card-n">02</span>
+          <div>
+            <div class="pilar-card-t">Equipos que escalan sin perder calidad</div>
+            <div class="pilar-card-d">Crecí el equipo de 6 a 14 personas manteniendo CSAT en ascenso. Sé qué contratar, cómo desarrollar seniority y cuándo bajar velocidad para subir el nivel.</div>
+          </div>
+        </div>
+        <div class="pilar-card rv rv-d2">
+          <span class="pilar-card-n">03</span>
+          <div>
+            <div class="pilar-card-t">Research como ventaja competitiva</div>
+            <div class="pilar-card-d">Integré research continuo al ciclo de producto. Entrevistas, usability testing, NPS, CSAT, FCR. No tomo decisiones de diseño sin evidencia.</div>
+          </div>
+        </div>
+        <div class="pilar-card rv rv-d3">
+          <span class="pilar-card-n">04</span>
+          <div>
+            <div class="pilar-card-t">IA como multiplicador del equipo</div>
+            <div class="pilar-card-d">Transformé la forma en que el equipo trabaja con IA. De exploración a producción: MCP × Figma, agentes propios y un pipeline diseño-desarrollo que no existía antes.</div>
+          </div>
+        </div>
+        <div class="pilar-card rv rv-d4">
+          <span class="pilar-card-n">05</span>
+          <div>
+            <div class="pilar-card-t">Liderazgo humano de alto rendimiento</div>
+            <div class="pilar-card-d">Mis equipos tienen las tasas de retención más altas de la empresa. Creo en autonomía progresiva, conversaciones honestas y reconocimiento genuino.</div>
+          </div>
+        </div>
+        <div class="pilar-card pilar-card-wide rv rv-d4">
+          <span class="pilar-card-n">06</span>
+          <div>
+            <div class="pilar-card-t">Delivery predecible a escala</div>
+            <div class="pilar-card-d">Gestiono roadmaps multidisciplinarios, priorizo con criterio de negocio y entrego. 106% del objetivo CSAT estratégico 2025, primer año en el rol.</div>
+          </div>
+        </div>
       </div>
-      <div class="pilar">
-        <div class="pilar-n">03</div>
-        <div class="pilar-t">Research como ventaja competitiva</div>
-        <div class="pilar-d">Integré research continuo al ciclo de producto. Entrevistas, usability testing, NPS, CSAT, FCR. No tomo decisiones de diseño sin evidencia.</div>
-      </div>
-      <div class="pilar">
-        <div class="pilar-n">04</div>
-        <div class="pilar-t">IA como multiplicador del equipo</div>
-        <div class="pilar-d">Primera en adoptar MCP × Figma en banca. No solo uso herramientas de IA: las evangelizo, entreno al equipo y las integro al flujo real de trabajo.</div>
-      </div>
-      <div class="pilar">
-        <div class="pilar-n">05</div>
-        <div class="pilar-t">Liderazgo humano de alto rendimiento</div>
-        <div class="pilar-d">Mis equipos tienen las tasas de retención más altas de la empresa. Creo en autonomía progresiva, conversaciones honestas y reconocimiento genuino.</div>
-      </div>
-      <div class="pilar">
-        <div class="pilar-n">06</div>
-        <div class="pilar-t">Delivery predecible a escala</div>
-        <div class="pilar-d">Gestiono roadmaps multidisciplinarios, priorizo con criterio de negocio y entrego. 106% del objetivo CSAT estratégico 2025, primer año en el rol.</div>
-      </div>
+
     </div>
   </div>
 </section>
@@ -1815,53 +1879,65 @@ footer {
   <div class="recos-wrap">
     <div class="recos-header rv">
       <div class="s-eyebrow">Recomendaciones</div>
-      <div class="s-title"><span class="t-muted">Lo que dicen quienes</span><span class="t-teal"><em>trabajaron conmigo</em></span></div>
     </div>
-    <div class="recos-grid">
 
-      <!-- Featured: Gisela (gran quote) -->
-      <div class="reco-card reco-feat rv">
-        <div class="reco-qmark">"</div>
-        <div class="reco-text">Dulce fue mi líder directa en Banco Supervielle y fue un placer transitar parte de ese camino con ella. Como líder es organizada, clara en los objetivos y en la comunicación, y por sobre todo, humana y respetuosa con sus equipos. La vi liderar diversas disciplinas: research, content, products y PO. Supo hacer fluir los frameworks de trabajo de una manera simple y eficiente. Es una líder estratégica que piensa a largo plazo y, al mismo tiempo, deja crecer y confía en sus equipos.</div>
-        <div class="reco-author">
-          <div class="r-av">GC</div>
+    <div class="qs-track">
+
+      <!-- Slide 1: Gisela -->
+      <div class="qs-slide qs-active">
+        <div class="qs-qmark">"</div>
+        <div class="qs-text">Dulce fue mi líder directa en Banco Supervielle y fue un placer transitar parte de ese camino con ella. Como líder es organizada, clara en los objetivos y en la comunicación, y por sobre todo, humana y respetuosa con sus equipos. La vi liderar diversas disciplinas: research, content, products y PO. Supo hacer fluir los frameworks de trabajo de una manera simple y eficiente. Es una líder estratégica que piensa a largo plazo y, al mismo tiempo, deja crecer y confía en sus equipos.</div>
+        <div class="qs-author">
+          <div class="qs-av">GC</div>
           <div>
-            <div class="r-name">Gisela Colombo</div>
-            <div class="r-role">Socióloga · UX Research · Market Research · Banca Supervielle</div>
+            <div class="qs-name">Gisela Colombo</div>
+            <div class="qs-role">Socióloga · UX Research · Market Research · Banca Supervielle</div>
           </div>
-          <div class="r-rel">Reporte directo</div>
+          <div class="qs-rel">Reporte directo</div>
         </div>
       </div>
 
-      <!-- Soledad Ferrer (viene de comunicación) -->
-      <div class="reco-card rv rv-d1">
-        <div class="reco-qmark">"</div>
-        <div class="reco-text">Dulce logra algo que muy pocos managers consiguen: que el contenido y el diseño hablen el mismo idioma. Me acompañó para integrar UX Writing al flujo de producto desde el minuto cero, con criterio y sin jerarquías artificiales. Aprendí mucho de cómo piensa el negocio y cómo traduce eso en dirección de equipo.</div>
-        <div class="reco-author">
-          <div class="r-av">SF</div>
+      <!-- Slide 2: Soledad -->
+      <div class="qs-slide">
+        <div class="qs-qmark">"</div>
+        <div class="qs-text">Dulce logra algo que muy pocos managers consiguen: que el contenido y el diseño hablen el mismo idioma. Me acompañó para integrar UX Writing al flujo de producto desde el minuto cero, con criterio y sin jerarquías artificiales. Aprendí mucho de cómo piensa el negocio y cómo traduce eso en dirección de equipo.</div>
+        <div class="qs-author">
+          <div class="qs-av">SF</div>
           <div>
-            <div class="r-name">María Soledad Ferrer</div>
-            <div class="r-role">Content & Conversational AI Lead · UX Writing · Fintech & Banking</div>
+            <div class="qs-name">María Soledad Ferrer</div>
+            <div class="qs-role">Content & Conversational AI Lead · UX Writing · Fintech & Banking</div>
           </div>
-          <div class="r-rel">Reporte directo</div>
+          <div class="qs-rel">Reporte directo</div>
         </div>
       </div>
 
-      <!-- Florencia -->
-      <div class="reco-card rv rv-d2">
-        <div class="reco-qmark">"</div>
-        <div class="reco-text">Tuve la suerte de que Dulce fuera mi manager. Sabe cuándo empujar y cuándo acompañar. Creó un espacio donde me animé a proponer, a equivocarme y a crecer de verdad. Tiene una capacidad rara de conectar la visión de producto con lo que el equipo necesita para ejecutarla.</div>
-        <div class="reco-author">
-          <div class="r-av">FL</div>
+      <!-- Slide 3: Florencia -->
+      <div class="qs-slide">
+        <div class="qs-qmark">"</div>
+        <div class="qs-text">Tuve la suerte de que Dulce fuera mi manager. Sabe cuándo empujar y cuándo acompañar. Creó un espacio donde me animé a proponer, a equivocarme y a crecer de verdad. Tiene una capacidad rara de conectar la visión de producto con lo que el equipo necesita para ejecutarla.</div>
+        <div class="qs-author">
+          <div class="qs-av">FL</div>
           <div>
-            <div class="r-name">Florencia Lescano</div>
-            <div class="r-role">Senior Product Designer · Design Systems · AI-First Design</div>
+            <div class="qs-name">Florencia Lescano</div>
+            <div class="qs-role">Senior Product Designer · Design Systems · AI-First Design</div>
           </div>
-          <div class="r-rel">Reporte directo</div>
+          <div class="qs-rel">Reporte directo</div>
         </div>
       </div>
 
     </div>
+
+    <!-- Controles -->
+    <div class="qs-controls">
+      <div class="qs-dots">
+        <div class="qs-dot qs-dot-active" data-qi="0"></div>
+        <div class="qs-dot" data-qi="1"></div>
+        <div class="qs-dot" data-qi="2"></div>
+      </div>
+      <button class="qs-btn qs-prev" aria-label="Anterior">←</button>
+      <button class="qs-btn qs-next" aria-label="Siguiente">→</button>
+    </div>
+
   </div>
 </section>
 
@@ -1869,18 +1945,26 @@ footer {
 <section id="contacto">
   <div class="contacto-grid">
     <div class="rv">
-      <h2>¿Trabajamos<br><em>juntos</em>?</h2>
-      <p>Estoy explorando conversaciones con organizaciones donde el diseño sea un motor de negocio, no una consecuencia de él. Liderazgo de equipos, producto y estrategia. Hablemos.</p>
+      <div class="contacto-eyebrow">Conectemos</div>
+      <div class="contacto-q">¿Trabajamos juntos?</div>
+      <h2>Construyo organizaciones de diseño<br>que <em>mueven el negocio</em>.</h2>
+      <div class="contacto-pillars">Design Leadership &nbsp;·&nbsp; DesignOps &nbsp;·&nbsp; AI-enabled Design</div>
+      <p>Integro estrategia, DesignOps e Inteligencia Artificial para escalar madurez, equipos y resultados. Estoy en la búsqueda de mi próximo desafío.</p>
     </div>
     <div class="c-btns rv rv-d2">
-      <a href="https://www.linkedin.com/in/dulce-portas/" target="_blank" class="c-btn c-btn-li">
-        <span>LinkedIn · Dulce Portas</span>
-        <span>→</span>
-      </a>
-      <a href="mailto:portasdulcemaria@gmail.com" class="c-btn c-btn-em">
-        <span>portasdulcemaria@gmail.com</span>
-        <span>→</span>
-      </a>
+      <div class="c-icons">
+        <!-- LinkedIn -->
+        <a href="https://www.linkedin.com/in/dulce-portas/" target="_blank" class="c-icon" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </a>
+        <!-- WhatsApp -->
+        <a href="https://wa.me/5491165698423" target="_blank" class="c-icon" aria-label="WhatsApp">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+      </div>
+      <button class="c-email" id="copy-mail-btn">
+        <span id="copy-mail-label">portasdulcemaria@gmail.com</span>
+      </button>
     </div>
   </div>
 </section>
@@ -1967,12 +2051,12 @@ document.querySelectorAll('.mbar-cell').forEach(el => mbarObs.observe(el));
 const pilarObs = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => {
     if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('v-in'), i * 75);
+      setTimeout(() => e.target.classList.add('v-in'), i * 80);
       pilarObs.unobserve(e.target);
     }
   });
-}, { threshold: 0.12 });
-document.querySelectorAll('.pilar').forEach(el => pilarObs.observe(el));
+}, { threshold: 0.1 });
+document.querySelectorAll('.pilar-hero, .pilar-card').forEach(el => pilarObs.observe(el));
 
 // Trayectoria stagger
 const trayObs = new IntersectionObserver((entries) => {
@@ -1985,13 +2069,30 @@ const trayObs = new IntersectionObserver((entries) => {
 }, { threshold: 0.08 });
 document.querySelectorAll('.tray-item').forEach(el => trayObs.observe(el));
 
-// Recos stagger
-const recoObs = new IntersectionObserver((entries) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) { e.target.classList.add('v-in'); recoObs.unobserve(e.target); }
-  });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reco-card').forEach(el => recoObs.observe(el));
+// Quote slider
+(function() {
+  const slides = document.querySelectorAll('.qs-slide');
+  const dots   = document.querySelectorAll('.qs-dot');
+  let cur = 0;
+  function goTo(n) {
+    slides[cur].classList.remove('qs-active');
+    dots[cur].classList.remove('qs-dot-active');
+    cur = (n + slides.length) % slides.length;
+    slides[cur].classList.add('qs-active');
+    dots[cur].classList.add('qs-dot-active');
+  }
+  document.querySelector('.qs-next').addEventListener('click', () => goTo(cur + 1));
+  document.querySelector('.qs-prev').addEventListener('click', () => goTo(cur - 1));
+  dots.forEach(d => d.addEventListener('click', () => goTo(+d.dataset.qi)));
+  // swipe support
+  let tx = 0;
+  const track = document.querySelector('.qs-track');
+  track.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, { passive: true });
+  track.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) goTo(dx < 0 ? cur + 1 : cur - 1);
+  }, { passive: true });
+})();
 
 // MCP diagram: staggered node pulse
 (function() {
@@ -2026,6 +2127,23 @@ function animateCount(el) {
   };
   requestAnimationFrame(tick);
 }
+
+// Copy mail to clipboard
+(function() {
+  const btn   = document.getElementById('copy-mail-btn');
+  const label = document.getElementById('copy-mail-label');
+  if (!btn) return;
+  btn.addEventListener('click', () => {
+    navigator.clipboard.writeText('portasdulcemaria@gmail.com').then(() => {
+      label.textContent = '¡Copiado!';
+      btn.classList.add('c-copied');
+      setTimeout(() => {
+        label.textContent = 'portasdulcemaria@gmail.com';
+        btn.classList.remove('c-copied');
+      }, 2200);
+    });
+  });
+})();
 </script>
 
 </body>
