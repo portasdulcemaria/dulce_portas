@@ -53,28 +53,34 @@
     }
     .nav-logo {
       font-size: 1.1rem; font-weight: 800; letter-spacing: -0.04em;
-      color: white; text-decoration: none;
-      display: flex; align-items: center; gap: 0.1rem; transition: color 0.35s;
+      color: white; text-decoration: none; transition: color 0.35s;
+      display: flex; align-items: center; gap: 0.1rem;
     }
-    .nav-logo span { color: var(--amber); font-size: 1.4rem; line-height: 0.7; margin-bottom: -2px; }
     .nav-scrolled .nav-logo { color: var(--ink); }
+    .nav-logo span { color: var(--amber); font-size: 1.4rem; line-height: 0.7; margin-bottom: -2px; }
     .nav-links { display: flex; align-items: center; gap: 1.75rem; }
     .nav-links a {
       font-size: 0.72rem; font-weight: 600; letter-spacing: 0.09em;
       text-transform: uppercase; color: rgba(255,255,255,0.55);
       text-decoration: none; transition: color 0.2s;
     }
-    .nav-links a:hover { color: white; }
     .nav-scrolled .nav-links a { color: var(--muted); }
+    .nav-links a:hover { color: white; }
     .nav-scrolled .nav-links a:hover { color: var(--ink); }
     .nav-cta {
-      background: var(--teal) !important; color: white !important;
-      padding: 0.38rem 1.15rem; border-radius: 100px;
-      font-size: 0.72rem !important; font-weight: 700 !important;
-      letter-spacing: 0.09em !important; text-transform: uppercase !important;
-      transition: opacity 0.2s !important;
+      border: 1px solid rgba(255,255,255,0.25) !important;
+      color: rgba(255,255,255,0.8) !important;
+      padding: 0.35rem 1rem; border-radius: 100px;
+      font-size: 0.72rem !important; font-weight: 500 !important;
+      letter-spacing: 0.07em !important; text-transform: uppercase !important;
+      transition: border-color 0.2s, color 0.2s !important;
     }
-    .nav-cta:hover { opacity: 0.85; }
+    .nav-scrolled .nav-cta {
+      border-color: rgba(0,0,0,0.18) !important;
+      color: var(--muted) !important;
+    }
+    .nav-cta:hover { border-color: rgba(255,255,255,0.5) !important; color: white !important; }
+    .nav-scrolled .nav-cta:hover { border-color: var(--ink) !important; color: var(--ink) !important; }
     @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } }
 
     /* ── SCROLL REVEAL ── */
@@ -87,19 +93,16 @@
 
     /* ── HERO ── */
     #hero {
-      background: var(--ink);
-      padding: 9rem 2rem 6rem;
-      position: relative; overflow: hidden;
+      background: linear-gradient(155deg, var(--teal) 0%, #0d3028 100%);
+      padding: 9rem 2rem 6rem; position: relative; overflow: hidden;
+      min-height: 85vh; display: flex; align-items: center;
     }
-    .hero-grid-bg {
-      position: absolute; inset: 0; opacity: 0.04;
-      background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
-      background-size: 40px 40px;
-    }
+    .hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+    .hero-orb-1 { width: 600px; height: 600px; background: rgba(237,179,60,0.07); top: -150px; right: -150px; }
+    .hero-orb-2 { width: 400px; height: 400px; background: rgba(255,255,255,0.03); bottom: -80px; left: 5%; }
     .hero-inner {
       max-width: var(--max-w); margin: 0 auto;
-      position: relative; z-index: 1; text-align: center;
+      position: relative; z-index: 1; width: 100%;
     }
     .hero-badge {
       display: inline-flex; align-items: center; gap: 0.4rem;
@@ -122,10 +125,10 @@
     .hero-sub {
       font-size: clamp(0.95rem, 1.6vw, 1.1rem);
       color: rgba(255,255,255,0.5); line-height: 1.75;
-      max-width: 560px; margin: 0 auto 3rem;
+      max-width: 560px; margin-bottom: 3rem;
     }
     .hero-metrics {
-      display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: center;
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
     }
     .hero-met {
       background: rgba(255,255,255,0.06);
@@ -154,17 +157,26 @@
 
     /* ── CONTEXT BAND ── */
     #context-band {
-      background: var(--teal); padding: 1.5rem 2rem;
+      background: var(--teal); padding: 0.75rem 0; overflow: hidden;
     }
-    .cb-inner {
-      max-width: var(--max-w); margin: 0 auto;
-      display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    .cb-track {
+      display: flex; width: max-content;
+      animation: cb-scroll 22s linear infinite;
+    }
+    #context-band:hover .cb-track { animation-play-state: paused; }
+    .cb-segment {
+      display: flex; align-items: center; gap: 1.5rem;
+      padding-right: 1.5rem; white-space: nowrap;
     }
     .cb-item {
-      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em;
       text-transform: uppercase; color: rgba(255,255,255,0.65);
     }
-    .cb-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+    .cb-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.3); flex-shrink:0; }
+    @keyframes cb-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
 
     /* ── SECTIONS ── */
     section { padding: 6rem 2rem; }
@@ -393,7 +405,7 @@
 
     /* ── FRAMEWORK ── */
     #framework { background: var(--bg); }
-    .fw-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3.5rem; }
+    .fw-intro { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 3.5rem; }
     .fw-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
     .fw-card {
       background: var(--white); border: 1px solid var(--border);
@@ -551,25 +563,27 @@
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <div class="hero-grid-bg"></div>
-  <div class="hero-inner">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-inner" style="text-align:center;">
     <div class="hero-badge rv">DesignOps · AI <span>/</span> Banco Supervielle · Diciembre 2025</div>
-    <div class="hero-eyebrow rv rv-d1">Caso de estudio 04</div>
     <h1 class="hero-title rv rv-d2">MCP <em>×</em> Figma<br>La nueva forma<br>de trabajar</h1>
-    <p class="hero-sub rv rv-d3">Lideré la adopción del MCP Server de Figma en Banco Supervielle: formé a los 14 perfiles de ejecución de diseño y redefiní el estándar IA-ready para un modelo software factory donde el output de UX es consumido por múltiples equipos de producto y desarrollo. Primera iniciativa de este tipo en banca digital en Argentina.</p>
-    <div class="hero-metrics rv rv-d4">
+    <p class="hero-sub rv rv-d3" style="margin-left:auto;margin-right:auto;">Lideré la adopción del MCP Server de Figma en Banco Supervielle: formé a los 14 perfiles de ejecución de diseño y redefiní el estándar IA-ready para un modelo software factory donde el output de UX es consumido por múltiples equipos de producto y desarrollo. Primera iniciativa de este tipo en banca digital en Argentina.</p>
+    <div class="hero-metrics rv rv-d4" style="justify-content:center;">
       <div class="hero-met">
-        <div class="hero-met-val">14</div>
-        <div class="hero-met-lab">UX — perfiles de ejecución</div>
+        <div class="hero-met-val" data-count="14">14</div>
+        <div class="hero-met-lab">perfiles de Product Design</div>
+        <div style="font-size:0.6rem;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.05em;margin-top:0.2rem;">adopción en diseño</div>
       </div>
       <div class="hero-met">
-        <div class="hero-met-eyebrow">Squads</div>
-        <div class="hero-met-main">Producto<br>+ Desarrollo</div>
-        <div class="hero-met-lab">equipos consumidores</div>
+        <div class="hero-met-val" data-count="100" data-suffix="%">100%</div>
+        <div class="hero-met-lab">squads Producto + Desarrollo</div>
+        <div style="font-size:0.6rem;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.05em;margin-top:0.2rem;">lo están usando</div>
       </div>
       <div class="hero-met">
-        <div class="hero-met-val">6</div>
-        <div class="hero-met-lab">integraciones 2026</div>
+        <div class="hero-met-val" data-count="6">6</div>
+        <div class="hero-met-lab">meses</div>
+        <div style="font-size:0.6rem;color:rgba(255,255,255,0.25);text-transform:uppercase;letter-spacing:0.05em;margin-top:0.2rem;">de piloto a escala total</div>
       </div>
     </div>
   </div>
@@ -577,16 +591,32 @@
 
 <!-- ── CONTEXT BAND ── -->
 <div id="context-band">
-  <div class="cb-inner">
-    <span class="cb-item">Banco Supervielle</span>
-    <div class="cb-dot"></div>
-    <span class="cb-item">Modelo software factory</span>
-    <div class="cb-dot"></div>
-    <span class="cb-item">DesignOps · AI-enabled Design</span>
-    <div class="cb-dot"></div>
-    <span class="cb-item">Rol: Design Leadership + DesignOps Lead</span>
-    <div class="cb-dot"></div>
-    <span class="cb-item">Diciembre 2025</span>
+  <div class="cb-track">
+    <!-- repeated twice for seamless loop -->
+    <div class="cb-segment">
+      <span class="cb-item">Banco Supervielle</span>
+      <div class="cb-dot"></div>
+      <span class="cb-item">Modelo software factory</span>
+      <div class="cb-dot"></div>
+      <span class="cb-item">DesignOps · AI-enabled Design</span>
+      <div class="cb-dot"></div>
+      <span class="cb-item">Rol: Design Leadership + DesignOps Lead</span>
+      <div class="cb-dot"></div>
+      <span class="cb-item">Diciembre 2025</span>
+      <div class="cb-dot"></div>
+    </div>
+    <div class="cb-segment" aria-hidden="true">
+      <span class="cb-item">Banco Supervielle</span>
+      <div class="cb-dot"></div>
+      <span class="cb-item">Modelo software factory</span>
+      <div class="cb-dot"></div>
+      <span class="cb-item">DesignOps · AI-enabled Design</span>
+      <div class="cb-dot"></div>
+      <span class="cb-item">Rol: Design Leadership + DesignOps Lead</span>
+      <div class="cb-dot"></div>
+      <span class="cb-item">Diciembre 2025</span>
+      <div class="cb-dot"></div>
+    </div>
   </div>
 </div>
 
@@ -847,13 +877,12 @@
             <div class="met-lab">UX — equipo de ejecución</div>
           </div>
           <div class="met-card">
-            <div class="met-eyebrow">Squads</div>
-            <div class="met-main">Producto<br>+ Desarrollo</div>
-            <div class="met-lab">equipos consumidores del servicio</div>
+            <div class="met-val">100%</div>
+            <div class="met-lab">squads Producto + Desarrollo</div>
           </div>
           <div class="met-card">
             <div class="met-val">6</div>
-            <div class="met-lab">Integraciones planificadas 2026</div>
+            <div class="met-lab">meses · de piloto a escala total</div>
           </div>
         </div>
       </div>
@@ -920,7 +949,7 @@
       "La meta es clara: que todo el banco construya interfaces con <em>un mismo estándar</em>. Y que ese estándar esté impulsado desde UX y Desarrollo Frontend. <em>Este es el comienzo de una manera nueva de trabajar. Y somos los protagonistas.</em>"
     </p>
     <div class="cierre-ctas rv rv-d4">
-      <a href="index.html" class="btn-primary">← Volver al portfolio</a>
+      <a href="index.html" style="font-size:0.8rem;font-weight:500;color:rgba(255,255,255,0.55);text-decoration:none;letter-spacing:0.02em;padding-bottom:2px;border-bottom:1px solid rgba(255,255,255,0);transition:color 0.25s,border-color 0.25s;" onmouseover="this.style.color='rgba(255,255,255,0.9)';this.style.borderBottomColor='rgba(255,255,255,0.4)'" onmouseout="this.style.color='rgba(255,255,255,0.55)';this.style.borderBottomColor='rgba(255,255,255,0)'">← Volver al portfolio</a>
     </div>
   </div>
 </section>
@@ -940,6 +969,44 @@
       entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.08 });
     document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  })();
+
+  // ── HERO METRIC COUNT-UP ──
+  function animateCount(el) {
+    if (!el || el.dataset.animated) return;
+    el.dataset.animated = '1';
+    const target = parseInt(el.dataset.count, 10);
+    if (!target) return;
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const dur = 1100;
+    const t0 = performance.now();
+    const tick = (now) => {
+      const p = Math.min((now - t0) / dur, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = prefix + Math.round(ease * target) + suffix;
+      if (p < 1) { requestAnimationFrame(tick); } else {
+        el.style.transition = 'transform 0.25s cubic-bezier(0.22,1,0.36,1)';
+        el.style.transform = 'scale(1.06)';
+        setTimeout(() => { el.style.transform = 'scale(1)'; }, 200);
+      }
+    };
+    requestAnimationFrame(tick);
+  }
+  (function() {
+    const metricsEl = document.querySelector('.hero-metrics');
+    if (!metricsEl) return;
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.querySelectorAll('[data-count]').forEach((el, i) => {
+            setTimeout(() => animateCount(el), i * 180);
+          });
+          obs.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.4 });
+    obs.observe(metricsEl);
   })();
 </script>
 
