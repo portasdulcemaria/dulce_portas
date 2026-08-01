@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ecosistema App 4.0 · Caso de estudio — Dulce Portas</title>
+  <meta name="description" content="De app transaccional a plataforma financiera integrada. Visión de producto, prueba de concepto y ecosistema en producción en Banco Supervielle.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:       #1C4B43;
+      --teal-mid:   #2a7a6e;
+      --teal-light: #e8f0ef;
+      --amber:      #EDB33C;
+      --bg:         #FAFAFA;
+      --white:      #FFFFFF;
+      --ink:        #1F2D2A;
+      --ink-mid:    #354843;
+      --muted:      #7A8E8C;
+      --border:     rgba(0,0,0,0.07);
+      --border-mid: rgba(0,0,0,0.12);
+      --font:       'Inter', system-ui, sans-serif;
+      --max-w:      1100px;
+      --r:          12px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      border-bottom: 1px solid transparent;
+      transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+    }
+    nav.nav-scrolled {
+      background: rgba(250,250,250,0.85);
+      backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border-bottom-color: var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 2rem;
+      height: 58px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-size: 1.1rem; font-weight: 800; letter-spacing: -0.04em; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 0.1rem; }
+    .nav-logo span { color: var(--amber); font-size: 1.4rem; line-height: 0.7; margin-bottom: -2px; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links a { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta { background: var(--teal) !important; color: white !important; padding: 0.38rem 1.15rem; border-radius: 100px; font-size: 0.72rem !important; font-weight: 700 !important; letter-spacing: 0.09em !important; text-transform: uppercase !important; transition: opacity 0.2s !important; }
+    .nav-cta:hover { opacity: 0.85; }
+    @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+    /* ── SCROLL REVEAL ── */
+    .rv { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .rv.visible { opacity: 1; transform: none; }
+    .rv-d1 { transition-delay: 0.08s; }
+    .rv-d2 { transition-delay: 0.16s; }
+    .rv-d3 { transition-delay: 0.24s; }
+    .rv-d4 { transition-delay: 0.32s; }
+    .rv-d5 { transition-delay: 0.4s; }
+
+    /* ── HERO ── */
+    #hero {
+      background: linear-gradient(155deg, var(--teal) 0%, #0d3028 100%);
+      padding: 9rem 2rem 6rem; position: relative; overflow: hidden;
+      min-height: 85vh; display: flex; align-items: center;
+    }
+    .hero-orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; }
+    .hero-orb-1 { width: 600px; height: 600px; background: rgba(237,179,60,0.07); top: -150px; right: -150px; }
+    .hero-orb-2 { width: 400px; height: 400px; background: rgba(255,255,255,0.03); bottom: -80px; left: 5%; }
+    .hero-inner { max-width: var(--max-w); margin: 0 auto; position: relative; z-index: 1; width: 100%; }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--amber); opacity: 0.85;
+      border: 1px solid rgba(237,179,60,0.3); border-radius: 100px;
+      padding: 0.3rem 0.8rem; margin-bottom: 2.5rem;
+    }
+    .hero-case-num { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.25); margin-bottom: 0.6rem; }
+    .hero-title {
+      font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900; letter-spacing: -0.04em;
+      line-height: 0.95; color: white; margin-bottom: 0.4rem;
+    }
+    .hero-title em { font-style: normal; color: var(--amber); }
+    .hero-title-sub {
+      font-size: clamp(1rem, 2.2vw, 1.5rem); font-weight: 300;
+      color: rgba(255,255,255,0.45); letter-spacing: -0.02em;
+      margin-bottom: 1.6rem; line-height: 1.4;
+    }
+    .hero-sub {
+      font-size: clamp(0.88rem, 1.4vw, 1rem); color: rgba(255,255,255,0.4);
+      line-height: 1.8; max-width: 520px; margin-bottom: 3.5rem;
+    }
+    .hero-metrics { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+    .hero-met {
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--r); padding: 1.1rem 1.4rem; min-width: 110px;
+    }
+    .hero-met-val { font-size: 2rem; font-weight: 900; letter-spacing: -0.04em; color: white; line-height: 1; }
+    .hero-met-lab { font-size: 0.63rem; font-weight: 500; letter-spacing: 0.04em; color: rgba(255,255,255,0.3); text-transform: uppercase; margin-top: 0.4rem; }
+
+    /* ── CONTEXT BAND ── */
+    #context-band { background: #0d3028; padding: 1.2rem 2rem; border-top: 1px solid rgba(255,255,255,0.06); }
+    .cb-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
+    .cb-item { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+    .cb-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.15); }
+
+    /* ── SHARED SECTION BASE ── */
+    section { padding: 7rem 2rem; }
+    .section-inner { max-width: var(--max-w); margin: 0 auto; }
+    .eyebrow {
+      font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .eyebrow::before { content: ''; display: block; width: 18px; height: 2px; background: var(--amber); border-radius: 2px; }
+    .eyebrow-amber { color: var(--amber); }
+    .eyebrow-amber::before { opacity: 0.5; }
+    .s-title {
+      font-size: clamp(1.9rem, 3.5vw, 2.8rem); font-weight: 800; letter-spacing: -0.035em;
+      line-height: 1.12; color: var(--ink); margin-bottom: 1rem;
+    }
+    .s-title-light { color: white; }
+    .s-desc { font-size: 1rem; color: var(--muted); line-height: 1.82; max-width: 560px; }
+
+    /* ── ARTIFACT FRAME ── */
+    /* Drop images into these slots — they look great with or without content */
+    .artifact-frame {
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.10);
+      background: #f0f0ee;
+      position: relative; width: 100%;
+    }
+    .artifact-frame img { display: block; width: 100%; height: auto; }
+    .artifact-frame--wide { aspect-ratio: 16/9; }
+    .artifact-frame--wide img { width: 100%; height: 100%; object-fit: cover; }
+    /* Empty slot fallback */
+    .artifact-slot {
+      width: 100%; aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #e8eeec 0%, #d5e0dd 100%);
+      border-radius: 16px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 0.6rem;
+      border: 2px dashed rgba(28,75,67,0.15);
+    }
+    .artifact-slot-label {
+      font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--teal); opacity: 0.5;
+    }
+    .artifact-slot-file {
+      font-size: 0.65rem; color: var(--muted); font-family: monospace;
+    }
+
+    /* ── OPORTUNIDAD ── */
+    #oportunidad { background: var(--white); border-top: 1px solid var(--border); }
+    .oport-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; margin-bottom: 4rem; }
+    .oport-statement {
+      font-size: clamp(1.3rem, 2.2vw, 1.75rem); font-weight: 800; letter-spacing: -0.025em;
+      line-height: 1.3; color: var(--ink); margin-bottom: 1.5rem;
+    }
+    .oport-statement em { font-style: normal; color: var(--teal); }
+    .benchmark-pills { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 2rem; }
+    .bench-pill {
+      font-size: 0.7rem; font-weight: 700; padding: 0.35rem 0.85rem;
+      border-radius: 100px; border: 1px solid var(--border-mid); color: var(--ink-mid);
+      background: var(--bg);
+    }
+    .bench-pill.ref { border-color: rgba(28,75,67,0.2); background: var(--teal-light); color: var(--teal); }
+
+    /* ── MODELO ── */
+    #modelo { background: var(--bg); }
+    .modelo-layout { display: grid; grid-template-columns: 1fr 2fr; gap: 5rem; align-items: start; }
+    .modelo-stages { display: flex; flex-direction: column; gap: 0; margin-top: 2rem; }
+    .ms-row {
+      padding: 1.1rem 0; border-bottom: 1px solid var(--border);
+      display: flex; align-items: flex-start; gap: 1rem;
+    }
+    .ms-row:last-child { border-bottom: none; }
+    .ms-row.active .ms-ver { color: var(--teal); font-weight: 900; }
+    .ms-row.active .ms-name { color: var(--teal); }
+    .ms-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--border-mid); flex-shrink: 0; margin-top: 5px;
+    }
+    .ms-row.active .ms-dot { background: var(--amber); }
+    .ms-ver { font-size: 0.65rem; font-weight: 700; color: var(--muted); letter-spacing: 0.06em; min-width: 32px; margin-top: 2px; }
+    .ms-name { font-size: 0.85rem; font-weight: 700; color: var(--ink-mid); margin-bottom: 0.1rem; }
+    .ms-period { font-size: 0.68rem; color: var(--muted); }
+
+    /* ── VISION ── */
+    #vision { background: var(--white); border-top: 1px solid var(--border); }
+    .vision-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+    .integ-cards { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+    .integ-card {
+      border: 1px solid var(--border); border-radius: var(--r);
+      padding: 1.2rem 1.4rem; background: var(--bg);
+      display: flex; gap: 1rem; align-items: flex-start;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .integ-card:hover { border-color: var(--teal); box-shadow: 0 4px 16px rgba(28,75,67,0.07); }
+    .integ-badge {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      padding: 0.22rem 0.55rem; border-radius: 100px; white-space: nowrap; flex-shrink: 0;
+    }
+    .integ-badge.api { background: var(--teal-light); color: var(--teal); }
+    .integ-badge.webview { background: #e8f0ff; color: #2a4a8a; }
+    .integ-badge.ext { background: #fdf6e3; color: #7a5a00; }
+    .integ-title { font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.2rem; }
+    .integ-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+    .socios-strip { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1.5rem; }
+    .socio-pill {
+      font-size: 0.68rem; font-weight: 600; padding: 0.3rem 0.75rem;
+      border: 1px solid var(--border-mid); border-radius: 100px;
+      color: var(--ink-mid); background: var(--white);
+    }
+
+    /* ── FILOSOFÍA / CONCEPTO ── */
+    #concepto { background: var(--ink); padding: 8rem 2rem; }
+    .concepto-inner { max-width: var(--max-w); margin: 0 auto; }
+    .concepto-eyebrow {
+      font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--amber); opacity: 0.7; display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .concepto-eyebrow::before { content: ''; display: block; width: 18px; height: 2px; background: var(--amber); opacity: 0.5; border-radius: 2px; }
+
+    /* The big philosophy statement */
+    .concepto-filosofia {
+      font-size: clamp(1.4rem, 2.8vw, 2.4rem); font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.25; color: white; max-width: 800px; margin-bottom: 1rem;
+    }
+    .concepto-filosofia em { font-style: normal; color: var(--amber); }
+    .concepto-sub-text {
+      font-size: 0.95rem; color: rgba(255,255,255,0.38); line-height: 1.8;
+      max-width: 560px; margin-bottom: 5rem;
+    }
+
+    /* Two-phase layout */
+    .two-phase { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+    .phase {
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .phase-label {
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+    .phase-num {
+      width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 0.68rem; font-weight: 800; flex-shrink: 0;
+    }
+    .phase-num.a { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.5); }
+    .phase-num.b { background: var(--amber); color: var(--ink); }
+    .phase-label-text { }
+    .phase-title { font-size: 0.82rem; font-weight: 800; color: white; }
+    .phase-subtitle { font-size: 0.72rem; color: rgba(255,255,255,0.35); margin-top: 0.1rem; }
+
+    .phone-frame {
+      background: #000; border-radius: 44px; overflow: hidden;
+      border: 8px solid rgba(255,255,255,0.1);
+      box-shadow: 0 40px 80px rgba(0,0,0,0.6);
+      position: relative; width: min(300px, 100%); margin: 0 auto;
+    }
+    .phone-frame::before {
+      content: ''; position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      width: 80px; height: 7px; background: rgba(255,255,255,0.07);
+      border-radius: 100px; z-index: 2;
+    }
+    .phone-frame video { display: block; width: 100%; height: auto; }
+    .phase-desc {
+      font-size: 0.78rem; color: rgba(255,255,255,0.38); line-height: 1.7; max-width: 280px; margin: 0 auto;
+    }
+
+    /* divider arrow */
+    .phase-arrow {
+      display: flex; align-items: center; justify-content: center;
+      align-self: center; margin-top: 4rem;
+    }
+    .phase-arrow svg { width: 32px; height: 32px; }
+
+    /* ── PRODUCTION SCREENS ── */
+    #produccion { background: var(--bg); border-top: 1px solid var(--border); }
+    .prod-header { margin-bottom: 4rem; }
+    .prod-screens-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+    .prod-artifact {
+      border-radius: var(--r); overflow: hidden; background: var(--white);
+      border: 1px solid var(--border); box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .prod-artifact:hover { box-shadow: 0 8px 30px rgba(0,0,0,0.1); transform: translateY(-2px); }
+    .prod-artifact-img {
+      aspect-ratio: 9/16; background: linear-gradient(135deg, #e8eeec 0%, #d5e0dd 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(28,75,67,0.4);
+    }
+    .prod-artifact-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .prod-artifact-body { padding: 1.1rem 1.2rem; }
+    .prod-artifact-tag { font-size: 0.58rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 0.35rem; }
+    .prod-artifact-name { font-size: 0.9rem; font-weight: 800; color: var(--ink); margin-bottom: 0.25rem; }
+    .prod-artifact-desc { font-size: 0.73rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── IMPACTO ── */
+    #impacto { background: var(--white); border-top: 1px solid var(--border); padding: 7rem 2rem; }
+    .impacto-inner { max-width: var(--max-w); margin: 0 auto; }
+    .impacto-header { max-width: 560px; margin-bottom: 5rem; }
+    /* Big numbers row */
+    .stats-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 0;
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      margin-bottom: 5rem;
+    }
+    .stat-cell {
+      padding: 2.5rem 2rem; border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-num {
+      font-size: clamp(2.2rem, 3.5vw, 3.5rem); font-weight: 900; letter-spacing: -0.05em;
+      color: var(--teal); line-height: 1; margin-bottom: 0.4rem;
+    }
+    .stat-num.amber { color: var(--amber); }
+    .stat-label { font-size: 0.68rem; font-weight: 600; color: var(--muted); letter-spacing: 0.05em; text-transform: uppercase; }
+    .stat-ctx { font-size: 0.72rem; color: var(--ink-mid); margin-top: 0.4rem; line-height: 1.5; }
+    /* Logros */
+    .logros-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .logro-card {
+      background: var(--bg); border: 1px solid var(--border); border-radius: var(--r);
+      padding: 1.5rem; display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .logro-icon {
+      width: 32px; height: 32px; border-radius: 10px;
+      background: var(--teal-light); display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0; font-size: 0.78rem; color: var(--teal); font-weight: 800;
+    }
+    .logro-title { font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .logro-desc { font-size: 0.76rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── CIERRE ── */
+    #cierre { background: var(--teal); padding: 8rem 2rem; }
+    .cierre-inner { max-width: 800px; margin: 0 auto; }
+    .cierre-eyebrow { font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 2rem; }
+    .cierre-q {
+      font-size: clamp(1.3rem, 2.5vw, 2rem); font-weight: 700; color: white;
+      line-height: 1.45; letter-spacing: -0.025em; margin-bottom: 3.5rem;
+    }
+    .cierre-q em { font-style: normal; color: var(--amber); }
+    .cierre-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 700; padding: 0.75rem 1.5rem; background: var(--amber); color: var(--ink); border-radius: 100px; text-decoration: none; letter-spacing: 0.02em; transition: opacity 0.2s, transform 0.2s; }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-ghost { display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.78rem; font-weight: 600; padding: 0.75rem 1.5rem; border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.65); border-radius: 100px; text-decoration: none; letter-spacing: 0.02em; transition: border-color 0.2s, color 0.2s; }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.55); color: white; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .oport-intro, .modelo-layout, .vision-layout { grid-template-columns: 1fr; gap: 3rem; }
+      .two-phase { grid-template-columns: 1fr; }
+      .phase-arrow { transform: rotate(90deg); }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-cell:nth-child(2) { border-right: none; }
+      .stat-cell:nth-child(3) { border-right: 1px solid var(--border); }
+      .logros-grid { grid-template-columns: 1fr; }
+      .prod-screens-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 640px) {
+      section, #concepto, #impacto, #cierre { padding: 5rem 1.5rem; }
+      #hero { padding: 7rem 1.5rem 4rem; min-height: auto; }
+      .hero-metrics { gap: 0.5rem; }
+      .hero-met { min-width: 0; flex: 1; }
+      .stats-grid { grid-template-columns: 1fr 1fr; }
+      .stat-cell:nth-child(even) { border-right: none; }
+      .stat-cell:nth-child(3) { border-right: 1px solid var(--border); border-top: 1px solid var(--border); }
+      .stat-cell:nth-child(4) { border-top: 1px solid var(--border); }
+      .prod-screens-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Dulce<span>.</span></a>
+    <div class="nav-links">
+      <a href="index.html">← Portfolio</a>
+      <a href="#oportunidad">Visión</a>
+      <a href="#concepto">Concepto</a>
+      <a href="#impacto" class="nav-cta">Impacto</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-inner">
+    <div class="hero-badge rv">Product Strategy · Design Leadership</div>
+    <div class="hero-case-num rv rv-d1">Caso de estudio 03</div>
+    <h1 class="hero-title rv rv-d2">Ecosistema<br>App <em>4.0</em></h1>
+    <p class="hero-title-sub rv rv-d2">De app transaccional a plataforma financiera integrada</p>
+    <p class="hero-sub rv rv-d3">Lideré la visión de producto que transformó la app de Banco Supervielle en un ecosistema financiero: integración banco-ALYC, alianzas con socios externos y una home escalable que unifica gestión bancaria, inversiones y beneficios.</p>
+    <div class="hero-metrics rv rv-d4">
+      <div class="hero-met">
+        <div class="hero-met-val">96%</div>
+        <div class="hero-met-lab">CSAT FCI</div>
+      </div>
+      <div class="hero-met">
+        <div class="hero-met-val">131K</div>
+        <div class="hero-met-lab">clientes con tenencia</div>
+      </div>
+      <div class="hero-met">
+        <div class="hero-met-val">38%</div>
+        <div class="hero-met-lab">tasa inversión rápida</div>
+      </div>
+      <div class="hero-met">
+        <div class="hero-met-val">+3</div>
+        <div class="hero-met-lab">socios integrados</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTEXT BAND ── -->
+<div id="context-band">
+  <div class="cb-inner">
+    <span class="cb-item">Banco Supervielle</span>
+    <div class="cb-dot"></div>
+    <span class="cb-item">Individuos cross canal</span>
+    <div class="cb-dot"></div>
+    <span class="cb-item">Product Design Leadership</span>
+    <div class="cb-dot"></div>
+    <span class="cb-item">2022 → 2025</span>
+  </div>
+</div>
+
+<!-- ── LA OPORTUNIDAD ── -->
+<section id="oportunidad">
+  <div class="section-inner">
+    <div class="oport-intro">
+      <div>
+        <div class="eyebrow rv">La oportunidad</div>
+        <p class="oport-statement rv rv-d1">
+          La banca que viene no es la <em>app de siempre</em> — es el ecosistema que resuelve todas las finanzas en un solo lugar.
+        </p>
+        <p class="s-desc rv rv-d2" style="max-width:100%">Nubank, Revolut, N26 y las grandes superapps asiáticas redefinieron el estándar: fricción cero, ecosistemas conectados, motion que enamora. El desafío no era hacer una app mejor — era cambiar el modelo de plataforma.</p>
+        <div class="benchmark-pills rv rv-d3">
+          <span class="bench-pill ref">Nubank</span>
+          <span class="bench-pill ref">N26</span>
+          <span class="bench-pill ref">Revolut</span>
+          <span class="bench-pill ref">Mercado Pago</span>
+          <span class="bench-pill">Alipay</span>
+          <span class="bench-pill">Gojek</span>
+          <span class="bench-pill">WeChat</span>
+          <span class="bench-pill">Rappi</span>
+        </div>
+      </div>
+      <div>
+        <!-- SLOT: exportar slide "Fintech & Superapps" o "Nuevo estándar" como PNG → img-superapps.png -->
+        <div class="artifact-frame rv rv-d2">
+          <img src="img-superapps.png" alt="Benchmark Fintech & Superapps" onerror="this.style.display='none';this.parentElement.classList.add('artifact-frame--empty')">
+        </div>
+        <div class="artifact-slot rv rv-d2" style="display:none" id="slot-superapps">
+          <div class="artifact-slot-label">Benchmark slide</div>
+          <div class="artifact-slot-file">img-superapps.png</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLOT: slide "Nuevo estándar" — full width -->
+    <div class="artifact-frame rv rv-d3" style="margin-top:1rem">
+      <img src="img-nuevo-estandar.png" alt="Nuevo estándar — superapps" onerror="this.style.display='none';this.parentElement.classList.add('artifact-frame--empty')">
+    </div>
+    <div class="artifact-slot rv rv-d3" style="display:none" id="slot-estandar">
+      <div class="artifact-slot-label">Slide "Nuevo estándar"</div>
+      <div class="artifact-slot-file">img-nuevo-estandar.png</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── MODELO DE PLATAFORMA ── -->
+<section id="modelo">
+  <div class="section-inner">
+    <div class="modelo-layout">
+      <div>
+        <div class="eyebrow rv">La evolución</div>
+        <h2 class="s-title rv rv-d1">Cuatro generaciones de plataforma</h2>
+        <div class="modelo-stages rv rv-d2">
+          <div class="ms-row">
+            <div class="ms-dot"></div>
+            <div>
+              <div class="ms-ver">1.0</div>
+              <div class="ms-name">Digitalización</div>
+              <div class="ms-period">2016–2019</div>
+            </div>
+          </div>
+          <div class="ms-row">
+            <div class="ms-dot"></div>
+            <div>
+              <div class="ms-ver">2.0</div>
+              <div class="ms-name">Simplificación y adopción</div>
+              <div class="ms-period">2020–2021</div>
+            </div>
+          </div>
+          <div class="ms-row">
+            <div class="ms-dot"></div>
+            <div>
+              <div class="ms-ver">3.0</div>
+              <div class="ms-name">Wallet y recurrencia</div>
+              <div class="ms-period">2022–2024</div>
+            </div>
+          </div>
+          <div class="ms-row active">
+            <div class="ms-dot"></div>
+            <div>
+              <div class="ms-ver">4.0</div>
+              <div class="ms-name">Ecosistema integrado</div>
+              <div class="ms-period">2025 →</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <!-- SLOT: exportar slide "Modelo de producto" → img-modelo-producto.png -->
+        <div class="artifact-frame rv rv-d2" style="aspect-ratio:16/10">
+          <img src="img-modelo-producto.png" alt="Modelo de producto 1.0 a 4.0" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#e8eeec,#d5e0dd)'">
+        </div>
+        <p class="rv rv-d3" style="font-size:0.72rem;color:var(--muted);margin-top:0.75rem;line-height:1.6">
+          El modelo de plataforma evolucionó de operaciones básicas hacia un ecosistema capaz de integrar gestión bancaria, inversiones y socios externos en una sola experiencia cohesiva.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── LA VISIÓN ── -->
+<section id="vision">
+  <div class="section-inner">
+    <div class="eyebrow rv">La visión de diseño</div>
+    <h2 class="s-title rv rv-d1" style="max-width:700px">Un ecosistema financiero en una sola app — escalable sin redesign</h2>
+
+    <!-- SLOT: slide "Alianzas / Integración" → img-alianzas.png — full width primero -->
+    <div class="artifact-frame rv rv-d2" style="margin:3rem 0 4rem">
+      <img src="img-alianzas.png" alt="Visión ecosistema — integración API, Webview, Externo" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#e8eeec,#d5e0dd)';this.parentElement.style.aspectRatio='16/9'">
+    </div>
+
+    <div class="vision-layout">
+      <div>
+        <p class="s-desc rv" style="max-width:100%;margin-bottom:2rem">Tres modelos de integración para crecer junto a nuevas capacidades y socios sin romper la experiencia existente.</p>
+        <div class="integ-cards rv rv-d1">
+          <div class="integ-card">
+            <span class="integ-badge api">API nativa</span>
+            <div>
+              <div class="integ-title">Integración directa en la app</div>
+              <div class="integ-desc">Diseñamos e implementamos directo en nuestra app unificando patrones del Design System. La experiencia es indistinguible del core.</div>
+            </div>
+          </div>
+          <div class="integ-card">
+            <span class="integ-badge webview">Webview</span>
+            <div>
+              <div class="integ-title">Interfaz del socio embebida</div>
+              <div class="integ-desc">Cargamos la interfaz del socio dentro de nuestra app. Su identidad, dentro del contexto Supervielle.</div>
+            </div>
+          </div>
+          <div class="integ-card">
+            <span class="integ-badge ext">Externo</span>
+            <div>
+              <div class="integ-title">Redirección al socio</div>
+              <div class="integ-desc">El diseño escala de forma simple a medida que se suman nuevos socios al ecosistema.</div>
+            </div>
+          </div>
+        </div>
+        <div class="socios-strip rv rv-d2">
+          <span class="socio-pill">Mercado Libre</span>
+          <span class="socio-pill">Aerolíneas Argentinas</span>
+          <span class="socio-pill">Cabify</span>
+          <span class="socio-pill">IOL · ALYC</span>
+        </div>
+      </div>
+      <div>
+        <!-- SLOT: slide "Rework completo / Integración Banco-Alyc" → img-integracion.png -->
+        <div class="artifact-frame rv rv-d2" style="aspect-ratio:3/4">
+          <img src="img-integracion.png" alt="Rework completo — Integración banco-ALYC" style="width:100%;height:100%;object-fit:cover" onerror="this.style.display='none';this.parentElement.style.background='linear-gradient(135deg,#e8eeec,#d5e0dd)'">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPLORAR PARA VALIDAR ── -->
+<section id="concepto">
+  <div class="concepto-inner">
+    <div class="concepto-eyebrow rv">El método</div>
+    <p class="concepto-filosofia rv rv-d1">
+      El prototipo no era el entregable —<br>era una <em>apuesta barata</em> para saber si el desarrollo valía la inversión.
+    </p>
+    <p class="concepto-sub-text rv rv-d2">
+      Antes de pedir recursos de desarrollo, construí una prueba de concepto completa para vender la visión internamente: nueva arquitectura de home, Inversión Rápida integrada, identidad renovada. Si el concepto generaba alineación, el camino al desarrollo estaba justificado. Si no, fallamos barato — antes del sprint 1.
+    </p>
+
+    <div class="two-phase rv rv-d3">
+      <!-- Phase A: El concepto -->
+      <div class="phase">
+        <div class="phase-label">
+          <div class="phase-num a">A</div>
+          <div class="phase-label-text">
+            <div class="phase-title">La apuesta — antes del desarrollo</div>
+            <div class="phase-subtitle">Prototipo funcional · 83s · concepto vendedor</div>
+          </div>
+        </div>
+        <div class="phone-frame">
+          <video controls preload="metadata" poster="poster-concepto.jpg" playsinline>
+            <source src="video-concepto.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="phase-desc">
+          Video de concepto creado para alinear stakeholders y dirección ejecutiva. Exploración rápida y económica que validó la visión antes de comprometer equipo de desarrollo.
+        </p>
+      </div>
+
+      <!-- Arrow -->
+      <div class="phase-arrow">
+        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="16" cy="16" r="15" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+          <path d="M10 16h12M17 11l5 5-5 5" stroke="var(--amber)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+
+      <!-- Phase B: En producción -->
+      <div class="phase">
+        <div class="phase-label">
+          <div class="phase-num b">B</div>
+          <div class="phase-label-text">
+            <div class="phase-title">El resultado — en producción</div>
+            <div class="phase-subtitle">App Supervielle live · v1.09</div>
+          </div>
+        </div>
+        <div class="phone-frame">
+          <video autoplay muted loop playsinline poster="poster-ecosistema.jpg">
+            <source src="video-productivo.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="phase-desc">
+          La apuesta fue validada. El ecosistema llegó a producción con 131K clientes activos con tenencia, CSAT de 96% y más de 100M en suscripciones FCI.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PANTALLAS EN PRODUCCIÓN ── -->
+<section id="produccion">
+  <div class="section-inner">
+    <div class="prod-header">
+      <div class="eyebrow rv">El producto en vivo</div>
+      <h2 class="s-title rv rv-d1">Las pantallas que llegaron a manos de los usuarios</h2>
+    </div>
+    <div class="prod-screens-grid">
+      <!-- SLOT: captura pantalla Home → img-home-prod.png -->
+      <div class="prod-artifact rv">
+        <div class="prod-artifact-img" id="slot-home">
+          <img src="img-home-prod.png" alt="Home — gestión centralizada" onerror="this.parentElement.innerHTML='HOME'">
+        </div>
+        <div class="prod-artifact-body">
+          <div class="prod-artifact-tag">Home</div>
+          <div class="prod-artifact-name">Gestión centralizada</div>
+          <div class="prod-artifact-desc">Saldo, shortcuts financieros, tarjetas, socios y recomendados unificados en una sola pantalla escalable.</div>
+        </div>
+      </div>
+      <!-- SLOT: captura pantalla Cuenta HIT / Inversión Rápida → img-cuenta-hit.png -->
+      <div class="prod-artifact rv rv-d1">
+        <div class="prod-artifact-img">
+          <img src="img-cuenta-hit.png" alt="Cuenta HIT — Inversión Rápida" onerror="this.parentElement.innerHTML='CUENTA HIT'">
+        </div>
+        <div class="prod-artifact-body">
+          <div class="prod-artifact-tag">Cuenta HIT · Inversión Rápida</div>
+          <div class="prod-artifact-name">38% sin tope, 1 tap</div>
+          <div class="prod-artifact-desc">Inversión de un toque desde el home. Sin fricciones. Tasa visible como acción prioritaria con retiro instantáneo.</div>
+        </div>
+      </div>
+      <!-- SLOT: captura pantalla Inversiones → img-inversiones-prod.png -->
+      <div class="prod-artifact rv rv-d2">
+        <div class="prod-artifact-img">
+          <img src="img-inversiones-prod.png" alt="Portfolio inversiones — FCI, Acciones, Dólar MEP" onerror="this.parentElement.innerHTML='INVERSIONES'">
+        </div>
+        <div class="prod-artifact-body">
+          <div class="prod-artifact-tag">Inversiones · Banco-ALYC</div>
+          <div class="prod-artifact-name">Portfolio unificado</div>
+          <div class="prod-artifact-desc">FCI · Acciones · Plazo Fijo · Dólar MEP. Rendimiento diario en tiempo real. Integración banco-ALYC sin fricción de contexto.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMPACTO ── -->
+<section id="impacto">
+  <div class="impacto-inner">
+    <div class="impacto-header rv">
+      <div class="eyebrow">El impacto</div>
+      <h2 class="s-title">Resultados que mueven el negocio</h2>
+      <p class="s-desc">Cada decisión de diseño estuvo conectada a métricas de negocio medibles. La evolución al Ecosistema 4.0 no fue un rediseño — fue una transformación de la propuesta de valor del banco.</p>
+    </div>
+
+    <div class="stats-grid rv rv-d1">
+      <div class="stat-cell">
+        <div class="stat-num">96%</div>
+        <div class="stat-label">CSAT FCI</div>
+        <div class="stat-ctx">Relanzamiento — desde 73% en el primer mes</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">131K</div>
+        <div class="stat-label">Clientes con tenencia</div>
+        <div class="stat-ctx">vs. 4.000 antes del relanzamiento del ecosistema</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num amber">+100M</div>
+        <div class="stat-label">Suscripciones FCI</div>
+        <div class="stat-ctx">Acumulado octubre 2025</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-num">2.6K</div>
+        <div class="stat-label">Clientes Dólar MEP</div>
+        <div class="stat-ctx">80% operó desde App Supervielle</div>
+      </div>
+    </div>
+
+    <div class="logros-grid rv rv-d2">
+      <div class="logro-card">
+        <div class="logro-icon">↑</div>
+        <div>
+          <div class="logro-title">Integración banco-ALYC productiva</div>
+          <div class="logro-desc">Fusión de experiencia bancaria con inversiones vía IOL. Navegación fluida entre universos complementarios sin fricción de contexto.</div>
+        </div>
+      </div>
+      <div class="logro-card">
+        <div class="logro-icon">◎</div>
+        <div>
+          <div class="logro-title">Ecosistema de socios escalable</div>
+          <div class="logro-desc">Tres modelos de integración (API / Webview / Externo) que permiten sumar socios sin redesign. Mercado Libre, Aerolíneas y Cabify activos.</div>
+        </div>
+      </div>
+      <div class="logro-card">
+        <div class="logro-icon">⊞</div>
+        <div>
+          <div class="logro-title">Design System como infraestructura</div>
+          <div class="logro-desc">Componentes unificados que aceleran el desarrollo. La plataforma creció sin deuda técnica de diseño.</div>
+        </div>
+      </div>
+      <div class="logro-card">
+        <div class="logro-icon">✦</div>
+        <div>
+          <div class="logro-title">Presentación al CEO · Roadmap 2026</div>
+          <div class="logro-desc">La visión del ecosistema fue presentada a nivel ejecutivo y aprobada como dirección estratégica para el roadmap 2026.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CIERRE ── -->
+<section id="cierre">
+  <div class="cierre-inner">
+    <div class="cierre-eyebrow rv">La filosofía</div>
+    <p class="cierre-q rv rv-d1">
+      "Diseñar para ecosistemas no es hacer pantallas más lindas — es <em>redefinir la propuesta de valor del banco</em>. Y la mejor manera de convencer a una organización de invertir en esa visión es <em>mostrársela antes de pedirle el presupuesto</em>."
+    </p>
+    <div class="cierre-ctas rv rv-d2">
+      <a href="index.html" class="btn-primary">← Volver al portfolio</a>
+      <a href="caso-04-mcp.html" class="btn-ghost">Ver caso MCP × Figma →</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ── NAV SCROLL ──
+  (function() {
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('nav-scrolled', window.scrollY > 48);
+    }, { passive: true });
+  })();
+
+  // ── SCROLL REVEAL ──
+  (function() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+      });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  })();
+
+  // ── ARTIFACT SLOT FALLBACK ──
+  // Show placeholder slot div when image fails to load
+  (function() {
+    const pairs = [
+      ['img-superapps.png', 'slot-superapps'],
+      ['img-nuevo-estandar.png', 'slot-estandar'],
+    ];
+    pairs.forEach(([src, slotId]) => {
+      const img = document.querySelector(`img[src="${src}"]`);
+      const slot = document.getElementById(slotId);
+      if (img && slot) {
+        img.addEventListener('error', () => {
+          img.closest('.artifact-frame').style.display = 'none';
+          slot.style.display = 'flex';
+        });
+      }
+    });
+  })();
+</script>
+
+</body>
+</html>

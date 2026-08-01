@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP × Figma · Caso de estudio — Dulce Portas</title>
+  <meta name="description" content="Cómo lideré la adopción del MCP Server de Figma en Banco Supervielle, formé al equipo y redefiní el pipeline de diseño a desarrollo.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --teal:      #1C4B43;
+      --teal-mid:  #2a7a6e;
+      --teal-light:#e8f0ef;
+      --amber:     #EDB33C;
+      --amber-pale:#fdf6e3;
+      --bg:        #FAFAFA;
+      --white:     #FFFFFF;
+      --ink:       #1F2D2A;
+      --ink-mid:   #354843;
+      --muted:     #7A8E8C;
+      --border:    rgba(0,0,0,0.07);
+      --border-mid:rgba(0,0,0,0.12);
+      --font:      'Inter', system-ui, sans-serif;
+      --max-w:     1100px;
+      --r:         12px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font); background: var(--bg); color: var(--ink); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      border-bottom: 1px solid transparent;
+      transition: background 0.35s ease, border-color 0.35s ease, backdrop-filter 0.35s ease;
+    }
+    nav.nav-scrolled {
+      background: rgba(250,250,250,0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom-color: var(--border);
+    }
+    .nav-inner {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 2rem;
+      height: 58px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 1.1rem; font-weight: 800; letter-spacing: -0.04em;
+      color: var(--ink); text-decoration: none;
+      display: flex; align-items: center; gap: 0.1rem;
+    }
+    .nav-logo span { color: var(--amber); font-size: 1.4rem; line-height: 0.7; margin-bottom: -2px; }
+    .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+    .nav-links a {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.09em;
+      text-transform: uppercase; color: var(--muted);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--ink); }
+    .nav-cta {
+      background: var(--teal) !important; color: white !important;
+      padding: 0.38rem 1.15rem; border-radius: 100px;
+      font-size: 0.72rem !important; font-weight: 700 !important;
+      letter-spacing: 0.09em !important; text-transform: uppercase !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+    @media (max-width: 640px) { .nav-links a:not(.nav-cta) { display: none; } }
+
+    /* ── SCROLL REVEAL ── */
+    .rv { opacity: 0; transform: translateY(22px); transition: opacity 0.65s ease, transform 0.65s ease; }
+    .rv.visible { opacity: 1; transform: none; }
+    .rv-d1 { transition-delay: 0.08s; }
+    .rv-d2 { transition-delay: 0.16s; }
+    .rv-d3 { transition-delay: 0.24s; }
+    .rv-d4 { transition-delay: 0.32s; }
+
+    /* ── HERO ── */
+    #hero {
+      background: var(--ink);
+      padding: 9rem 2rem 6rem;
+      position: relative; overflow: hidden;
+    }
+    .hero-grid-bg {
+      position: absolute; inset: 0; opacity: 0.04;
+      background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .hero-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      position: relative; z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--amber); opacity: 0.85;
+      border: 1px solid rgba(237,179,60,0.3); border-radius: 100px;
+      padding: 0.3rem 0.8rem; margin-bottom: 2rem;
+    }
+    .hero-badge span { color: rgba(255,255,255,0.35); }
+    .hero-eyebrow {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.35); margin-bottom: 0.8rem;
+    }
+    .hero-title {
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900; letter-spacing: -0.04em; line-height: 1;
+      color: white; margin-bottom: 1.4rem;
+    }
+    .hero-title em { font-style: normal; color: var(--amber); }
+    .hero-sub {
+      font-size: clamp(0.95rem, 1.6vw, 1.1rem);
+      color: rgba(255,255,255,0.5); line-height: 1.75;
+      max-width: 560px; margin-bottom: 3rem;
+    }
+    .hero-metrics {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+    }
+    .hero-met {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--r); padding: 1.1rem 1.4rem;
+      min-width: 130px;
+    }
+    .hero-met-val {
+      font-size: 1.9rem; font-weight: 800; letter-spacing: -0.04em;
+      color: white; line-height: 1;
+    }
+    .hero-met-val.small { font-size: 1.2rem; }
+    .hero-met-eyebrow {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); opacity: 0.7;
+      margin-bottom: 0.3rem;
+    }
+    .hero-met-main {
+      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
+      color: white; line-height: 1.2;
+    }
+    .hero-met-lab {
+      font-size: 0.67rem; font-weight: 500; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.35); text-transform: uppercase; margin-top: 0.35rem;
+    }
+
+    /* ── CONTEXT BAND ── */
+    #context-band {
+      background: var(--teal); padding: 1.5rem 2rem;
+    }
+    .cb-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      display: flex; align-items: center; gap: 2rem; flex-wrap: wrap;
+    }
+    .cb-item {
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.06em;
+      text-transform: uppercase; color: rgba(255,255,255,0.65);
+    }
+    .cb-dot { width: 3px; height: 3px; border-radius: 50%; background: rgba(255,255,255,0.25); }
+
+    /* ── SECTIONS ── */
+    section { padding: 6rem 2rem; }
+    .section-inner { max-width: var(--max-w); margin: 0 auto; }
+
+    .eyebrow {
+      font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--teal); margin-bottom: 0.75rem;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .eyebrow::before {
+      content: ''; display: block; width: 18px; height: 2px; background: var(--amber); border-radius: 2px;
+    }
+    .s-title {
+      font-size: clamp(1.7rem, 3vw, 2.5rem);
+      font-weight: 800; letter-spacing: -0.035em; line-height: 1.15;
+      color: var(--ink); margin-bottom: 1rem;
+    }
+    .s-desc {
+      font-size: 0.95rem; color: var(--muted); line-height: 1.82; max-width: 560px;
+    }
+
+    /* ── EL PROBLEMA ── */
+    #problema { background: var(--white); border-top: 1px solid var(--border); }
+    .problema-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
+    }
+    .gap-diagram {
+      display: flex; flex-direction: column; gap: 1rem;
+    }
+    .gd-row {
+      display: grid; grid-template-columns: 1fr 44px 1fr; gap: 0; align-items: stretch;
+    }
+    .gd-col {
+      border-radius: var(--r); padding: 1.4rem 1.5rem;
+      display: flex; flex-direction: column; gap: 0.6rem;
+    }
+    .gd-col.design { background: var(--teal-light); border: 1px solid rgba(28,75,67,0.1); }
+    .gd-col.dev    { background: #f9f3f3;           border: 1px solid rgba(180,60,60,0.1); }
+    .gd-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .gd-col.design .gd-label { color: var(--teal); }
+    .gd-col.dev    .gd-label { color: #b03030; }
+    .gd-items { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.2rem; }
+    .gd-item {
+      font-size: 0.75rem; color: var(--ink-mid); font-weight: 500;
+      display: flex; align-items: center; gap: 0.45rem;
+    }
+    .gd-item::before {
+      content: ''; width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0;
+    }
+    .gd-col.design .gd-item::before { background: var(--teal); opacity: 0.5; }
+    .gd-col.dev    .gd-item::before { background: #b03030; opacity: 0.4; }
+    .gd-item.strike { text-decoration: line-through; opacity: 0.45; }
+    .gd-mid {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 0.5rem 0; gap: 0.2rem;
+    }
+    .gd-arrow-line {
+      flex: 1; width: 1px; background: var(--border-mid);
+    }
+    .gd-arrow-icon {
+      font-size: 0.65rem; color: var(--muted); transform: rotate(90deg);
+      opacity: 0.5; line-height: 1;
+    }
+    .gd-separator {
+      display: flex; align-items: center; gap: 0.75rem; padding: 0.25rem 0;
+    }
+    .gd-sep-line { flex: 1; height: 1px; background: var(--border); }
+    .gd-sep-label {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); white-space: nowrap; opacity: 0.6;
+    }
+
+    .tension-quote {
+      margin-top: 2.5rem;
+      padding: 1.4rem 1.6rem;
+      background: var(--teal-light);
+      border-left: 3px solid var(--teal);
+      border-radius: 0 var(--r) var(--r) 0;
+    }
+    .tension-quote p {
+      font-size: 0.9rem; font-style: italic; color: var(--ink-mid); line-height: 1.75;
+    }
+
+    /* ── QUÉ ES MCP ── */
+    #que-es { background: var(--bg); }
+    .mcp-explainer {
+      display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start;
+      margin-top: 3rem;
+    }
+    .mcp-def {
+      background: var(--ink); border-radius: var(--r);
+      padding: 2rem; color: white;
+    }
+    .mcp-def-label {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.6rem;
+    }
+    .mcp-def-acronym {
+      font-size: 1.4rem; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--amber); margin-bottom: 0.3rem;
+    }
+    .mcp-def-full {
+      font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 1.2rem;
+      padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .mcp-def-body {
+      font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.8;
+      margin-bottom: 1.4rem;
+    }
+    .mcp-def-quote {
+      font-size: 0.82rem; font-style: italic;
+      color: var(--amber); opacity: 0.85; line-height: 1.65;
+    }
+
+    .mcp-pillars { display: flex; flex-direction: column; gap: 1rem; }
+    .mcp-pillar {
+      border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1.4rem 1.6rem;
+      background: var(--white);
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .mcp-pillar:hover { border-color: var(--teal); box-shadow: 0 4px 20px rgba(28,75,67,0.08); }
+    .mcp-pillar-num {
+      font-size: 0.65rem; font-weight: 800; width: 26px; height: 26px;
+      border-radius: 50%; background: var(--teal-light); color: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .mcp-pillar-title { font-size: 0.88rem; font-weight: 700; color: var(--ink); margin-bottom: 0.3rem; }
+    .mcp-pillar-desc { font-size: 0.8rem; color: var(--muted); line-height: 1.7; }
+
+    /* ── POR QUÉ FIGMA ── */
+    #por-que-figma { background: var(--white); border-top: 1px solid var(--border); }
+    .figma-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 5rem; align-items: center; }
+    .figma-items { display: flex; flex-direction: column; gap: 0.75rem; margin-top: 2rem; }
+    .figma-item {
+      display: flex; align-items: flex-start; gap: 0.8rem; padding: 0.8rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .figma-item:last-child { border-bottom: none; }
+    .figma-item-icon {
+      width: 22px; height: 22px; border-radius: 6px;
+      background: var(--teal-light); color: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.7rem; font-weight: 800; flex-shrink: 0; margin-top: 1px;
+    }
+    .figma-item-title { font-size: 0.85rem; font-weight: 600; color: var(--ink); }
+    .figma-item-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.6; margin-top: 0.1rem; }
+
+    .figma-highlight {
+      background: linear-gradient(135deg, var(--teal) 0%, #0e3028 100%);
+      border-radius: var(--r); padding: 2.5rem 2rem;
+      color: white; position: relative; overflow: hidden;
+    }
+    .figma-highlight::before {
+      content: ''; position: absolute; top: -40px; right: -40px;
+      width: 180px; height: 180px; border-radius: 50%;
+      background: rgba(237,179,60,0.08);
+    }
+    .fh-label {
+      font-size: 0.6rem; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--amber); opacity: 0.7;
+      margin-bottom: 1rem;
+    }
+    .fh-title {
+      font-size: 1.25rem; font-weight: 800; letter-spacing: -0.025em;
+      color: white; line-height: 1.25; margin-bottom: 1.2rem;
+    }
+    .fh-body { font-size: 0.85rem; color: rgba(255,255,255,0.6); line-height: 1.8; }
+    .fh-quote {
+      margin-top: 1.6rem; padding-top: 1.4rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 0.82rem; font-style: italic; color: var(--amber);
+      opacity: 0.85; line-height: 1.65;
+    }
+
+    /* ── DEMO ── */
+    #demo { background: var(--ink); padding: 6rem 2rem; }
+    .demo-inner { max-width: var(--max-w); margin: 0 auto; }
+    .demo-eyebrow {
+      font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--amber); opacity: 0.7;
+      display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.75rem;
+    }
+    .demo-eyebrow::before { content: ''; display: block; width: 18px; height: 2px; background: var(--amber); opacity: 0.5; border-radius: 2px; }
+    .demo-title {
+      font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+      font-weight: 800; letter-spacing: -0.035em; line-height: 1.15;
+      color: white; margin-bottom: 0.8rem;
+    }
+    .demo-sub {
+      font-size: 0.9rem; color: rgba(255,255,255,0.45); line-height: 1.75;
+      max-width: 580px; margin-bottom: 2.5rem;
+    }
+    .demo-video-wrap {
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #000; margin-bottom: 2rem;
+      box-shadow: 0 24px 60px rgba(0,0,0,0.5);
+    }
+    .demo-video-wrap video { display: block; width: 100%; height: auto; }
+    .demo-steps {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px;
+      background: rgba(255,255,255,0.07);
+      border-radius: var(--r); overflow: hidden;
+    }
+    .demo-step {
+      background: rgba(255,255,255,0.03);
+      padding: 1.2rem 1.4rem;
+      display: flex; gap: 0.75rem; align-items: flex-start;
+    }
+    .demo-step-num {
+      font-size: 0.6rem; font-weight: 800;
+      width: 20px; height: 20px; border-radius: 50%;
+      background: rgba(237,179,60,0.15); color: var(--amber);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .demo-step-title { font-size: 0.8rem; font-weight: 700; color: rgba(255,255,255,0.8); margin-bottom: 0.2rem; }
+    .demo-step-desc { font-size: 0.72rem; color: rgba(255,255,255,0.35); line-height: 1.6; }
+    @media (max-width: 640px) { .demo-steps { grid-template-columns: 1fr; } }
+
+    /* ── FRAMEWORK ── */
+    #framework { background: var(--bg); }
+    .fw-intro { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; margin-bottom: 3.5rem; }
+    .fw-pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; }
+    .fw-card {
+      background: var(--white); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1.8rem;
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    }
+    .fw-card:hover {
+      border-color: var(--teal);
+      box-shadow: 0 8px 28px rgba(28,75,67,0.1);
+      transform: translateY(-2px);
+    }
+    .fw-card-num {
+      font-size: 2.5rem; font-weight: 900; letter-spacing: -0.06em;
+      color: var(--teal-light); line-height: 1;
+      margin-bottom: 1.2rem;
+    }
+    .fw-card-title { font-size: 0.95rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; }
+    .fw-card-sub { font-size: 0.72rem; font-weight: 600; color: var(--amber); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 1rem; }
+    .fw-card-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .fw-card-list li {
+      font-size: 0.8rem; color: var(--muted); line-height: 1.6;
+      padding-left: 1rem; position: relative;
+    }
+    .fw-card-list li::before {
+      content: '→'; position: absolute; left: 0;
+      color: var(--teal); font-size: 0.7rem; line-height: 1.8;
+    }
+    .fw-card-list li strong { color: var(--ink-mid); font-weight: 600; }
+
+    /* ── IMPACTO ── */
+    #impacto { background: var(--white); border-top: 1px solid var(--border); }
+    .impacto-top { display: grid; grid-template-columns: 1fr 1.2fr; gap: 5rem; align-items: start; margin-bottom: 4rem; }
+    .metrics-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 2.5rem; }
+    .met-card {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--r); padding: 1.4rem;
+    }
+    .met-eyebrow {
+      font-size: 0.58rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--amber); margin-bottom: 0.3rem;
+    }
+    .met-main {
+      font-size: 1rem; font-weight: 800; letter-spacing: -0.02em;
+      color: var(--teal); line-height: 1.2; margin-bottom: 0.1rem;
+    }
+    .met-val {
+      font-size: 2.2rem; font-weight: 900; letter-spacing: -0.05em;
+      color: var(--teal); line-height: 1;
+    }
+    .met-val.small-val { font-size: 1.3rem; margin-top: 0.2rem; }
+    .met-lab { font-size: 0.68rem; font-weight: 500; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.3rem; }
+
+    .pasos-title { font-size: 1rem; font-weight: 700; color: var(--ink); margin-bottom: 1.5rem; }
+    .pasos-list { display: flex; flex-direction: column; gap: 0; }
+    .paso {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1rem 0; border-bottom: 1px solid var(--border);
+      position: relative;
+    }
+    .paso:last-child { border-bottom: none; }
+    .paso-num {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--teal); color: white;
+      font-size: 0.65rem; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+    .paso-body { flex: 1; }
+    .paso-title { font-size: 0.85rem; font-weight: 700; color: var(--ink); margin-bottom: 0.25rem; }
+    .paso-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.5rem; }
+    .paso-tag {
+      font-size: 0.6rem; font-weight: 600; padding: 0.18rem 0.55rem;
+      border-radius: 100px; background: var(--teal-light); color: var(--teal);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── CIERRE ── */
+    #cierre { background: var(--ink); padding: 7rem 2rem; }
+    .cierre-inner { max-width: 760px; margin: 0 auto; }
+    .cierre-eyebrow {
+      font-size: 0.63rem; font-weight: 700; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--amber); opacity: 0.65;
+      margin-bottom: 2rem;
+    }
+    .cierre-q1 {
+      font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+      font-weight: 700; color: white;
+      line-height: 1.4; letter-spacing: -0.025em;
+      margin-bottom: 2.5rem;
+    }
+    .cierre-q1 em { font-style: normal; color: var(--amber); }
+    .cierre-divider { width: 40px; height: 2px; background: rgba(255,255,255,0.1); margin-bottom: 2.5rem; }
+    .cierre-q2 {
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      font-style: italic; color: rgba(255,255,255,0.45);
+      line-height: 1.7; letter-spacing: -0.01em;
+    }
+    .cierre-q2 em { font-style: normal; color: rgba(255,255,255,0.7); }
+
+    .cierre-ctas { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 4rem; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; font-weight: 700; padding: 0.75rem 1.5rem;
+      background: var(--amber); color: var(--ink); border-radius: 100px;
+      text-decoration: none; letter-spacing: 0.02em;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.78rem; font-weight: 600; padding: 0.75rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.18); color: rgba(255,255,255,0.65);
+      border-radius: 100px; text-decoration: none; letter-spacing: 0.02em;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.45); color: white; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .problema-grid,
+      .mcp-explainer,
+      .figma-grid,
+      .fw-intro,
+      .impacto-top { grid-template-columns: 1fr; gap: 3rem; }
+      .fw-pillars { grid-template-columns: 1fr; }
+      .metrics-strip { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 640px) {
+      section { padding: 4rem 1.5rem; }
+      #hero { padding: 7rem 1.5rem 4rem; }
+      .hero-metrics { gap: 0.5rem; }
+      .hero-met { min-width: 0; flex: 1; }
+      .fw-pillars { grid-template-columns: 1fr; }
+      .metrics-strip { grid-template-columns: 1fr 1fr; }
+      .metrics-strip .met-card:last-child { grid-column: 1 / -1; }
+      .cierre-ctas { flex-direction: column; }
+      .problema-visual { gap: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Dulce<span>.</span></a>
+    <div class="nav-links">
+      <a href="index.html">← Portfolio</a>
+      <a href="#que-es">Contexto</a>
+      <a href="#demo">Demo</a>
+      <a href="#impacto" class="nav-cta">Impacto</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid-bg"></div>
+  <div class="hero-inner">
+    <div class="hero-badge rv">DesignOps · AI <span>/</span> Banco Supervielle · Diciembre 2025</div>
+    <div class="hero-eyebrow rv rv-d1">Caso de estudio 04</div>
+    <h1 class="hero-title rv rv-d2">MCP <em>×</em> Figma<br>La nueva forma<br>de trabajar</h1>
+    <p class="hero-sub rv rv-d3">Lideré la adopción del MCP Server de Figma en Banco Supervielle: formé a los 14 perfiles de ejecución de diseño y redefiní el estándar IA-ready para un modelo software factory donde el output de UX es consumido por múltiples equipos de producto y desarrollo. Primera iniciativa de este tipo en banca digital en Argentina.</p>
+    <div class="hero-metrics rv rv-d4">
+      <div class="hero-met">
+        <div class="hero-met-val">14</div>
+        <div class="hero-met-lab">UX — perfiles de ejecución</div>
+      </div>
+      <div class="hero-met">
+        <div class="hero-met-eyebrow">Squads</div>
+        <div class="hero-met-main">Producto<br>+ Desarrollo</div>
+        <div class="hero-met-lab">equipos consumidores</div>
+      </div>
+      <div class="hero-met">
+        <div class="hero-met-val">6</div>
+        <div class="hero-met-lab">integraciones 2026</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CONTEXT BAND ── -->
+<div id="context-band">
+  <div class="cb-inner">
+    <span class="cb-item">Banco Supervielle</span>
+    <div class="cb-dot"></div>
+    <span class="cb-item">Modelo software factory</span>
+    <div class="cb-dot"></div>
+    <span class="cb-item">DesignOps · AI-enabled Design</span>
+    <div class="cb-dot"></div>
+    <span class="cb-item">Rol: Design Leadership + DesignOps Lead</span>
+    <div class="cb-dot"></div>
+    <span class="cb-item">Diciembre 2025</span>
+  </div>
+</div>
+
+<!-- ── EL PROBLEMA ── -->
+<section id="problema">
+  <div class="section-inner">
+    <div class="problema-grid">
+      <div>
+        <div class="eyebrow rv">El punto de partida</div>
+        <h2 class="s-title rv rv-d1">El gap eterno entre diseño y desarrollo</h2>
+        <p class="s-desc rv rv-d2">
+          Diseño entrega una pantalla perfecta. Desarrollo implementa algo distinto. No por falta de cuidado, sino por falta de contexto compartido. La IA podía leer imágenes — pero una imagen no tiene tokens, componentes ni jerarquía. Era un intérprete que hablaba un idioma que nuestros archivos no hablaban.
+        </p>
+        <div class="tension-quote rv rv-d3">
+          <p>"El problema no era el handoff. Era que el sistema entero — diseño, desarrollo e IA — no hablaba el mismo idioma."</p>
+        </div>
+      </div>
+      <div class="rv rv-d2">
+        <div class="gap-diagram">
+          <!-- headers -->
+          <div class="gd-row">
+            <div style="padding: 0 0 0.5rem 0.25rem;">
+              <span style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--teal)">Diseño entrega</span>
+            </div>
+            <div></div>
+            <div style="padding: 0 0 0.5rem 0.25rem;">
+              <span style="font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#b03030">Desarrollo recibe</span>
+            </div>
+          </div>
+          <!-- content row -->
+          <div class="gd-row">
+            <div class="gd-col design">
+              <div class="gd-items">
+                <div class="gd-item">Componentes del Design System</div>
+                <div class="gd-item">Tokens de color y tipografía</div>
+                <div class="gd-item">Auto Layout responsive</div>
+                <div class="gd-item">Interacciones anotadas</div>
+                <div class="gd-item">Jerarquía de capas nombrada</div>
+              </div>
+            </div>
+            <div class="gd-mid">
+              <div class="gd-arrow-line"></div>
+              <div class="gd-arrow-icon">▶</div>
+              <div class="gd-arrow-line"></div>
+            </div>
+            <div class="gd-col dev">
+              <div class="gd-items">
+                <div class="gd-item strike">Componentes del Design System</div>
+                <div class="gd-item strike">Tokens de color y tipografía</div>
+                <div class="gd-item strike">Auto Layout responsive</div>
+                <div class="gd-item strike">Interacciones anotadas</div>
+                <div class="gd-item" style="color:var(--muted);font-style:italic;font-weight:400">Una imagen plana. La IA interpreta.</div>
+              </div>
+            </div>
+          </div>
+          <!-- separator -->
+          <div class="gd-separator">
+            <div class="gd-sep-line"></div>
+            <div class="gd-sep-label">Sin MCP — el contexto se pierde en el camino</div>
+            <div class="gd-sep-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── QUÉ ES MCP ── -->
+<section id="que-es">
+  <div class="section-inner">
+    <div class="eyebrow rv">La tecnología</div>
+    <h2 class="s-title rv rv-d1">¿Qué es un MCP Server?</h2>
+    <div class="mcp-explainer">
+      <div class="mcp-def rv rv-d2">
+        <div class="mcp-def-label">Definición</div>
+        <div class="mcp-def-acronym">MCP</div>
+        <div class="mcp-def-full">Model Context Protocol · Anthropic, noviembre 2024</div>
+        <div class="mcp-def-body">Es un intérprete universal: conecta una IA con cualquier sistema y le da el contexto exacto que necesita para trabajar bien. No es magia — es protocolo.</div>
+        <div class="mcp-def-quote">"No es magia. Es contexto. Y contexto es todo."</div>
+      </div>
+      <div class="mcp-pillars rv rv-d3">
+        <div class="mcp-pillar">
+          <div class="mcp-pillar-num">1</div>
+          <div>
+            <div class="mcp-pillar-title">Expone datos de forma ordenada</div>
+            <div class="mcp-pillar-desc">El MCP serializa el sistema (Figma, Jira, código) en un formato que la IA puede leer con precisión, sin ambigüedad.</div>
+          </div>
+        </div>
+        <div class="mcp-pillar">
+          <div class="mcp-pillar-num">2</div>
+          <div>
+            <div class="mcp-pillar-title">Estandariza cómo la IA entiende esos datos</div>
+            <div class="mcp-pillar-desc">En lugar de cada herramienta hablar su propio dialecto, el protocolo define una gramática común entre diseño, desarrollo y AI.</div>
+          </div>
+        </div>
+        <div class="mcp-pillar">
+          <div class="mcp-pillar-num">3</div>
+          <div>
+            <div class="mcp-pillar-title">Permite que la IA actúe, no solo lea</div>
+            <div class="mcp-pillar-desc">La IA puede preguntar, leer y ejecutar acciones sobre el sistema. Genera código que usa los mismos componentes y tokens que el diseño.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── POR QUÉ FIGMA ── -->
+<section id="por-que-figma">
+  <div class="section-inner">
+    <div class="figma-grid">
+      <div>
+        <div class="eyebrow rv">El salto</div>
+        <h2 class="s-title rv rv-d1">¿Por qué en Figma cambia todo?</h2>
+        <p class="s-desc rv rv-d2">El MCP Server de Figma no lee una imagen — accede directamente al archivo y entiende el diseño como un modelo estructurado. Cada capa, cada componente, cada token.</p>
+        <div class="figma-items rv rv-d3">
+          <div class="figma-item">
+            <div class="figma-item-icon">◈</div>
+            <div>
+              <div class="figma-item-title">Componentes y variantes</div>
+              <div class="figma-item-desc">La IA conoce exactamente qué componentes existen y cómo se usan, no los reinventa.</div>
+            </div>
+          </div>
+          <div class="figma-item">
+            <div class="figma-item-icon">⬡</div>
+            <div>
+              <div class="figma-item-title">Variables y tokens</div>
+              <div class="figma-item-desc">Color, tipografía, espaciado — el código generado usa los mismos tokens del Design System.</div>
+            </div>
+          </div>
+          <div class="figma-item">
+            <div class="figma-item-icon">⊞</div>
+            <div>
+              <div class="figma-item-title">Auto Layout = responsive explícito</div>
+              <div class="figma-item-desc">Las reglas de comportamiento responsive ya están en el diseño. La IA las lee, no las adivina.</div>
+            </div>
+          </div>
+          <div class="figma-item">
+            <div class="figma-item-icon">⌥</div>
+            <div>
+              <div class="figma-item-title">Jerarquía de capas y props</div>
+              <div class="figma-item-desc">El contexto de estados, condiciones e interacciones viaja intacto desde Figma al código.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="figma-highlight rv rv-d2">
+        <div class="fh-label">El resultado</div>
+        <div class="fh-title">Código que no es un primer borrador — es el diseño hecho código.</div>
+        <div class="fh-body">
+          Cuando la IA tiene acceso al archivo estructurado, genera código preciso usando los mismos componentes y tokens del Design System. El dev recibe algo que puede usar, no algo que tiene que reescribir.
+        </div>
+        <div class="fh-quote">"Esto hace que la IA genere código mucho más preciso. Y lo hace usando los mismos componentes y tokens del Design System."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── DEMO ── -->
+<section id="demo">
+  <div class="demo-inner">
+    <div class="demo-eyebrow rv">El flujo en acción</div>
+    <h2 class="demo-title rv rv-d1">De Figma al componente en código — sin fricción</h2>
+    <p class="demo-sub rv rv-d2">Grabación real del pipeline MCP en funcionamiento: el MCP Server lee el archivo de Figma, Claude interpreta el diseño estructurado y genera el componente usando los tokens y patrones del Design System (Kite).</p>
+    <div class="demo-video-wrap rv rv-d3">
+      <video
+        controls
+        preload="metadata"
+        poster="demo-poster.jpg"
+        style="width:100%;display:block;">
+        <source src="demo-mcp-figma.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="demo-steps rv rv-d4">
+      <div class="demo-step">
+        <div class="demo-step-num">1</div>
+        <div>
+          <div class="demo-step-title">Figma + MCP Server activo</div>
+          <div class="demo-step-desc">El panel de MCP conectado al archivo. Anotaciones de diseño, componentes y tokens disponibles para la IA.</div>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="demo-step-num">2</div>
+        <div>
+          <div class="demo-step-title">Claude lee y genera en VS Code</div>
+          <div class="demo-step-desc">Claude accede al diseño como modelo estructurado y escribe el componente usando los mismos patrones del Design System.</div>
+        </div>
+      </div>
+      <div class="demo-step">
+        <div class="demo-step-num">3</div>
+        <div>
+          <div class="demo-step-title">Componente en Storybook</div>
+          <div class="demo-step-desc">Hub Benefit Card (Cabify / ChangoMás) renderizado y funcional en Kite — el resultado directo del flujo MCP.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── FRAMEWORK ── -->
+<section id="framework">
+  <div class="section-inner">
+    <div class="fw-intro">
+      <div>
+        <div class="eyebrow rv">Lo que construí</div>
+        <h2 class="s-title rv rv-d1">Nuevo estándar IA-ready para el equipo</h2>
+      </div>
+      <div>
+        <p class="s-desc rv rv-d2" style="max-width:100%; margin-top: 0.5rem;">La tecnología estaba disponible para todos. Lo que hice fue entenderla a fondo, construir el framework de adopción y formar a 14 personas para que trabajaran de una manera nueva — antes de que el banco lo exigiera.</p>
+      </div>
+    </div>
+    <div class="fw-pillars">
+      <div class="fw-card rv rv-d1">
+        <div class="fw-card-num">01</div>
+        <div class="fw-card-sub">Invertir en las bases</div>
+        <div class="fw-card-title">Conectar diseño con código</div>
+        <ul class="fw-card-list">
+          <li><strong>Code Connect:</strong> vincular cada componente de Figma con su par en código para que la IA sepa qué usar.</li>
+          <li><strong>Code syntax:</strong> definir cómo se deben escribir las variables para web y nativo — un idioma compartido.</li>
+        </ul>
+      </div>
+      <div class="fw-card rv rv-d2">
+        <div class="fw-card-num">02</div>
+        <div class="fw-card-sub">Estructurar el handoff</div>
+        <div class="fw-card-title">Diseñar para que la IA entienda</div>
+        <ul class="fw-card-list">
+          <li><strong>Frames por breakpoint:</strong> el comportamiento responsive explícito, no supuesto.</li>
+          <li><strong>Auto Layout siempre:</strong> diseño que ya porta sus reglas de flexibilidad.</li>
+          <li><strong>Capas con nombre:</strong> cuando no son claros, la IA interpreta mal y genera código incorrecto.</li>
+          <li><strong>Componentes sin detachar:</strong> evitar inconsistencias en el código generado.</li>
+        </ul>
+      </div>
+      <div class="fw-card rv rv-d3">
+        <div class="fw-card-num">03</div>
+        <div class="fw-card-sub">Compartir la intención</div>
+        <div class="fw-card-title">Anotar para que la IA no adivine</div>
+        <ul class="fw-card-list">
+          <li><strong>Estados interactivos:</strong> qué pasa en click, hover, focus — explícito en el archivo.</li>
+          <li><strong>Estados condicionales:</strong> cuándo algo cambia según una acción o condición.</li>
+          <li><strong>Contenido dinámico:</strong> aclarar qué datos vienen de fuentes externas.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── IMPACTO ── -->
+<section id="impacto">
+  <div class="section-inner">
+    <div class="impacto-top">
+      <div>
+        <div class="eyebrow rv">El impacto</div>
+        <h2 class="s-title rv rv-d1">Resultados y hoja de ruta</h2>
+        <p class="s-desc rv rv-d2">En Supervielle el equipo de diseño opera como una unidad de ejecución centralizada — modelo software factory — donde 14 perfiles de UX producen el output que consumen múltiples squads de producto y desarrollo. Estandarizar el pipeline de diseño aquí no impacta solo al equipo de diseño: impacta a toda la cadena de entrega.</p>
+        <div class="metrics-strip rv rv-d3">
+          <div class="met-card">
+            <div class="met-val">14</div>
+            <div class="met-lab">UX — equipo de ejecución</div>
+          </div>
+          <div class="met-card">
+            <div class="met-eyebrow">Squads</div>
+            <div class="met-main">Producto<br>+ Desarrollo</div>
+            <div class="met-lab">equipos consumidores del servicio</div>
+          </div>
+          <div class="met-card">
+            <div class="met-val">6</div>
+            <div class="met-lab">Integraciones planificadas 2026</div>
+          </div>
+        </div>
+      </div>
+      <div class="rv rv-d2">
+        <div class="pasos-title">Integraciones en curso · 2026</div>
+        <div class="pasos-list">
+          <div class="paso">
+            <div class="paso-num">1</div>
+            <div class="paso-body">
+              <div class="paso-title">Early adopters team</div>
+              <div class="paso-tags"><span class="paso-tag">Formación</span><span class="paso-tag">Cultura</span></div>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">2</div>
+            <div class="paso-body">
+              <div class="paso-title">Workflow estandarizado</div>
+              <div class="paso-tags"><span class="paso-tag">DesignOps</span><span class="paso-tag">Documentación</span></div>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">3</div>
+            <div class="paso-body">
+              <div class="paso-title">Accesibilidad automatizada</div>
+              <div class="paso-tags"><span class="paso-tag">A11y</span><span class="paso-tag">Testing</span></div>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">4</div>
+            <div class="paso-body">
+              <div class="paso-title">Taggeo GA + manual de voz y tono</div>
+              <div class="paso-tags"><span class="paso-tag">Analytics</span><span class="paso-tag">Content</span></div>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">5</div>
+            <div class="paso-body">
+              <div class="paso-title">Jira tickets + Gitlab pipelines</div>
+              <div class="paso-tags"><span class="paso-tag">CI/CD</span><span class="paso-tag">Dev</span></div>
+            </div>
+          </div>
+          <div class="paso">
+            <div class="paso-num">6</div>
+            <div class="paso-body">
+              <div class="paso-title">Tests cross browser + cross device</div>
+              <div class="paso-tags"><span class="paso-tag">QA automatizado</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CIERRE ── -->
+<section id="cierre">
+  <div class="cierre-inner">
+    <div class="cierre-eyebrow rv">La visión</div>
+    <p class="cierre-q1 rv rv-d1">
+      "MCP no reemplaza nuestro trabajo. Lo <em>potencia</em>. Y cuanto más claro esté nuestro diseño, más fiel va a ser el resultado — ya sea generado por un dev o por una IA."
+    </p>
+    <div class="cierre-divider rv rv-d2"></div>
+    <p class="cierre-q2 rv rv-d3">
+      "La meta es clara: que todo el banco construya interfaces con <em>un mismo estándar</em>. Y que ese estándar esté impulsado desde UX y Desarrollo Frontend. <em>Este es el comienzo de una manera nueva de trabajar. Y somos los protagonistas.</em>"
+    </p>
+    <div class="cierre-ctas rv rv-d4">
+      <a href="index.html" class="btn-primary">← Volver al portfolio</a>
+    </div>
+  </div>
+</section>
+
+<script>
+  // ── NAV SCROLL (igual que INDEX) ──
+  (function() {
+    const nav = document.getElementById('main-nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('nav-scrolled', window.scrollY > 48);
+    }, { passive: true });
+  })();
+
+  // ── SCROLL REVEAL ──
+  (function() {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+    }, { threshold: 0.08 });
+    document.querySelectorAll('.rv').forEach(el => obs.observe(el));
+  })();
+</script>
+
+</body>
+</html>
