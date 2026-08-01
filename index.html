@@ -3,7 +3,56 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Dulce Portas — Design Leadership</title>
+<title>Dulce Portas | Head of Product Design · VP Design · CDO · Fintech & Banca Digital</title>
+<meta name="description" content="Dulce Portas — Head of Product Design, Design Director y líder de equipos con 10+ años en productos digitales y 4+ en liderazgo. Especialización en Fintech, Banca Digital y DesignOps. Buenos Aires, Argentina. Disponible para roles VP, Head of Design, CDO y CPO.">
+<meta name="keywords" content="Head of Product Design, VP Design, Design Director, Chief Design Officer, CDO, CPO, UX Director, Design Leader, Fintech Design, Banca Digital UX, DesignOps, Product Design Manager, Directora de Diseño, Liderazgo de Diseño, Buenos Aires, Argentina, Design Leadership, UX Leadership">
+<meta name="author" content="Dulce Portas">
+<meta name="robots" content="index, follow">
+
+<!-- Open Graph — LinkedIn, Slack, WhatsApp -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Dulce Portas | Head of Product Design · VP Design · Fintech">
+<meta property="og:description" content="10+ años diseñando productos digitales. 4+ liderando equipos en Fintech & Banca. Especialista en DesignOps, estrategia de producto e IA aplicada. Buenos Aires.">
+<meta property="og:url" content="https://portasdulcemaria.github.io/dulce_portas/">
+<meta property="og:image" content="./dulce-foto.jpg">
+<meta property="og:locale" content="es_AR">
+<meta property="profile:first_name" content="Dulce">
+<meta property="profile:last_name" content="Portas">
+
+<!-- Twitter / X Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dulce Portas | Head of Product Design · Fintech">
+<meta name="twitter:description" content="10+ años diseñando productos digitales. 4+ liderando equipos en Fintech & Banca Digital. DesignOps · AI · Estrategia de producto.">
+<meta name="twitter:image" content="./dulce-foto.jpg">
+
+<!-- JSON-LD Person Schema — Google Knowledge Panel -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Dulce Portas",
+  "jobTitle": "Head of Product Design",
+  "description": "Design Director y líder de equipos con 10+ años en productos digitales y especialización en Fintech, Banca Digital y DesignOps.",
+  "knowsAbout": ["Product Design", "UX Design", "Design Leadership", "DesignOps", "Fintech", "Banca Digital", "Design Systems", "UX Research", "AI Tools", "Stakeholder Management"],
+  "alumniOf": {
+    "@type": "CollegeOrUniversity",
+    "name": "FADU-UBA"
+  },
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Banco Supervielle"
+  },
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Buenos Aires",
+    "addressCountry": "AR"
+  },
+  "sameAs": [
+    "https://www.linkedin.com/in/dulce-portas/",
+    "https://portasdulcemaria.github.io/dulce_portas/"
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
@@ -95,10 +144,9 @@ nav.nav-scrolled {
 
 /* ── HERO ── */
 #hero {
-  min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 7rem 2rem 4rem;
+  padding: 8rem 2rem 3rem;
   position: relative;
   overflow: hidden;
   background: var(--white);
@@ -122,7 +170,7 @@ nav.nav-scrolled {
   max-width: var(--max-w); margin: 0 auto; width: 100%;
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 5rem;
+  gap: 3.5rem;
   align-items: center;
 }
 .hero-left { max-width: 560px; }
@@ -139,7 +187,7 @@ nav.nav-scrolled {
 /* Photo frame with effect */
 .hero-photo-wrap {
   position: relative;
-  width: 240px; height: 240px;
+  width: 190px; height: 190px;
   display: flex; align-items: center; justify-content: center;
 }
 /* Soft blob behind photo */
@@ -158,7 +206,7 @@ nav.nav-scrolled {
 .hero-photo-wrap::after {
   content: '';
   position: absolute;
-  width: 260px; height: 260px;
+  width: 208px; height: 208px;
   border-radius: 50%;
   border: 1.5px solid transparent;
   border-top-color: rgba(237,179,60,0.45);
@@ -166,7 +214,7 @@ nav.nav-scrolled {
   animation: arc-spin 12s linear infinite;
 }
 .hero-photo {
-  width: 220px; height: 220px;
+  width: 172px; height: 172px;
   border-radius: 50%;
   object-fit: cover; object-position: center 15%;
   border: 3px solid var(--white);
@@ -246,7 +294,7 @@ nav.nav-scrolled {
 
 /* headline */
 .hero-h1 {
-  font-size: clamp(2.6rem, 5.5vw, 5rem);
+  font-size: clamp(2.2rem, 4.5vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.045em;
   line-height: 1.06;
@@ -459,22 +507,66 @@ body.loaded .hero-h1 em::after { width: 100%; }
 }
 
 /* ── ABOUT ── */
-/* ── ABOUT ── */
 #about { background: var(--bg); padding: 6rem 2rem; border-top: 1px solid var(--border); }
 .about-wrap { max-width: var(--max-w); margin: 0 auto; }
 
-/* Header — stack limpio: título → bio → tags → capabilities */
-.about-hdr {
-  display: flex; flex-direction: column;
-  gap: 1.5rem; margin-bottom: 2.5rem; max-width: 640px;
+/* Main 2-col: bio izq · capabilities der */
+.about-main {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: 4.5rem;
+  align-items: start;
 }
-.about-hdr-title .s-eyebrow { margin-bottom: 1rem; }
-/* Dos tonos igual que el hero */
+.about-left { display: flex; flex-direction: column; gap: 1.25rem; }
+
+/* Editorial photo in about left */
+.about-photo-wrap {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+.about-photo-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 10%;
+  display: block;
+  filter: grayscale(15%);
+  transition: filter 0.4s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.about-photo-wrap:hover img { filter: grayscale(0%); transform: scale(1.03); }
+.about-photo-badge {
+  position: absolute;
+  bottom: 1rem; left: 1rem;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 100px;
+  padding: 0.3rem 0.85rem;
+  display: flex; align-items: center; gap: 0.45rem;
+  font-size: 0.7rem; font-weight: 600; color: var(--ink);
+  letter-spacing: -0.01em;
+}
+.about-photo-badge-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #22c55e;
+  flex-shrink: 0;
+  animation: dot-pulse 2.6s ease-in-out infinite;
+}
+
+/* (cap-featured legacy removed — now using cap-card-dark) */
+
+/* Título dos tonos */
+.about-h2 { margin-top: 0.75rem; }
 .about-title-line1 {
   display: block;
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 800; letter-spacing: -0.04em; line-height: 1.15;
-  color: #8FA8A4;
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  font-weight: 500; letter-spacing: 0.02em; line-height: 1.5;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
 }
 .about-title-line2 {
   display: block;
@@ -488,20 +580,46 @@ body.loaded .hero-h1 em::after { width: 100%; }
   text-decoration-color: rgba(237,179,60,0.5);
   text-underline-offset: 4px;
 }
-.about-hdr-bio {
-  padding-top: 0.25rem;
-}
-.about-hdr-bio p {
-  font-size: 0.93rem; color: var(--muted); line-height: 1.82;
-}
-.about-hdr-bio p + p { margin-top: 0.9rem; }
 
-/* Tags */
-.about-tags {
-  display: flex; flex-wrap: wrap; gap: 0.4rem;
-  margin-bottom: 3rem; padding-bottom: 3rem;
-  border-bottom: 1px solid var(--border);
+/* Bio */
+.about-bio { font-size: 0.93rem; color: var(--muted); line-height: 1.82; }
+
+/* Tags categorizados */
+.about-tag-groups { display: flex; flex-direction: column; gap: 0.8rem; padding-top: 0.5rem; }
+.about-tag-group { display: flex; flex-direction: column; gap: 0.4rem; }
+.tag-group-label {
+  font-size: 0.6rem; font-weight: 700;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted);
 }
+.tag-group-pills { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+
+/* Stats 2×2 grid — tarjeta dividida */
+.stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--white);
+}
+.sg { padding: 1rem 1.1rem; }
+.sg:nth-child(1),.sg:nth-child(2) { border-bottom: 0.5px solid var(--border); }
+.sg:nth-child(odd) { border-right: 0.5px solid var(--border); }
+.sg-n {
+  font-size: 1.7rem; font-weight: 800;
+  letter-spacing: -0.04em; line-height: 1;
+  color: var(--ink);
+}
+.sg-n.c-teal { color: var(--teal); }
+.sg-n.c-amber { color: #c8851a; }
+.sg-l {
+  font-size: 0.65rem; font-weight: 500;
+  color: var(--muted); margin-top: 0.2rem; line-height: 1.4;
+}
+
+/* Right col */
+.about-right { display: flex; flex-direction: column; }
 .at {
   font-size: 0.75rem; font-weight: 500;
   padding: 0.3rem 0.8rem; border-radius: 100px;
@@ -512,58 +630,169 @@ body.loaded .hero-h1 em::after { width: 100%; }
 }
 .at:hover { border-color: rgba(28,75,67,0.25); color: var(--teal); transform: translateY(-1px); }
 
-/* Capabilities — lista editorial */
-.cap-list { display: flex; flex-direction: column; }
-.cap-row {
+/* Capabilities — grid 2×2 de cards */
+.cap-grid {
   display: grid;
-  grid-template-columns: 60px 1fr auto;
-  gap: 2rem;
-  align-items: start;
-  padding: 2rem 0;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+}
+.cap-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem 1.35rem 1.35rem;
+  display: flex; flex-direction: column; gap: 0;
+  position: relative;
+  overflow: hidden;
+  opacity: 0; transform: translateY(10px);
+  transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.22,1,0.36,1),
+              border-color 0.22s, box-shadow 0.22s;
+}
+.cap-card.v-in { opacity: 1; transform: none; }
+.cap-card:hover {
+  border-color: rgba(28,75,67,0.2);
+}
+/* Color accent left edge */
+.cap-card::before {
+  content: '';
+  position: absolute; left: 0; top: 20%; bottom: 20%;
+  width: 3px; border-radius: 0 3px 3px 0;
+  background: var(--teal);
+  opacity: 0;
+  transition: opacity 0.25s, top 0.3s cubic-bezier(0.22,1,0.36,1), bottom 0.3s cubic-bezier(0.22,1,0.36,1);
+}
+.cap-card:hover::before { opacity: 1; top: 12%; bottom: 12%; }
+.cap-card[data-accent="amber"]::before { background: #c8851a; }
+.cap-card[data-accent="purple"]::before { background: #534AB7; }
+
+.cap-card-dark {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.cap-card-dark:hover {
+  border-color: #2d3d3a;
+}
+.cap-card-dark::before { display: none; }
+
+/* Shimmer sweep on hover */
+.cap-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.22) 50%, transparent 65%);
+  transform: translateX(-120%);
+  pointer-events: none;
+  border-radius: inherit;
+}
+.cap-card:hover::after {
+  animation: card-shimmer 0.58s ease forwards;
+}
+.cap-card-dark::after {
+  background: linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.07) 50%, transparent 65%);
+}
+@keyframes card-shimmer {
+  to { transform: translateX(210%); }
+}
+
+/* KPI pop-in for text values (no counter) */
+.cap-card.v-in .cap-card-kpi-val:not([data-count]) {
+  animation: kpi-pop-in 0.55s 0.38s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes kpi-pop-in {
+  from { transform: scale(0.65) translateY(5px); opacity: 0; }
+  to   { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+/* Top row: icon + num */
+.cap-card-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+.cap-card-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(28,75,67,0.07);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--teal); flex-shrink: 0;
+}
+.cap-card-dark .cap-card-icon {
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.75);
+}
+.cap-card-num {
+  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em;
+  color: var(--muted); opacity: 0.5; padding-top: 0.15rem;
+}
+.cap-card-dark .cap-card-num { color: rgba(255,255,255,0.3); opacity: 1; }
+
+/* Title */
+.cap-card-title {
+  font-size: 0.95rem; font-weight: 700;
+  color: var(--ink); letter-spacing: -0.025em; line-height: 1.3;
+  margin-bottom: 0.5rem; position: relative; z-index: 1;
+}
+.cap-card-dark .cap-card-title { color: #fff; }
+
+/* Description */
+.cap-card-desc {
+  font-size: 0.76rem; color: var(--muted); line-height: 1.75;
+  flex: 1; position: relative; z-index: 1;
+}
+.cap-card-dark .cap-card-desc { color: rgba(255,255,255,0.52); }
+
+/* Tools tags (dark card only) */
+.cap-card-tools {
+  display: flex; flex-wrap: wrap; gap: 0.3rem; margin-bottom: 1rem;
+}
+.cap-card-tools span {
+  font-size: 0.61rem; font-weight: 500;
+  padding: 0.12rem 0.55rem; border-radius: 100px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.12);
+}
+
+/* Ghost background number */
+.cap-card-bg-num {
+  position: absolute; top: -0.5rem; right: 0.85rem;
+  font-size: 5.5rem; font-weight: 800;
+  letter-spacing: -0.05em; line-height: 1;
+  color: rgba(28,75,67,0.05);
+  pointer-events: none; user-select: none; z-index: 0;
+}
+.cap-card-dark .cap-card-bg-num { color: rgba(255,255,255,0.04); }
+.cap-card[data-accent="amber"] .cap-card-bg-num { color: rgba(200,133,26,0.07); }
+.cap-card[data-accent="purple"] .cap-card-bg-num { color: rgba(83,74,183,0.07); }
+
+/* Metric — hero del card, ahora arriba */
+.cap-card-kpi {
+  margin-top: 0;
+  margin-bottom: 0.85rem;
+  padding-bottom: 0.85rem;
   border-bottom: 1px solid var(--border);
-  opacity: 0; transform: translateY(12px);
-  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  position: relative; z-index: 1;
 }
-.cap-row:first-child { border-top: 1px solid var(--border); }
-.cap-row.v-in { opacity: 1; transform: none; }
-.cap-row:hover .cap-num { opacity: 0.6; }
+.cap-card-dark .cap-card-kpi { border-bottom-color: rgba(255,255,255,0.1); }
+.cap-card-kpi-val {
+  display: block;
+  font-size: 2rem; font-weight: 800;
+  letter-spacing: -0.055em; line-height: 1;
+  color: var(--teal);
+  margin-bottom: 0.2rem;
+}
+.cap-card-dark .cap-card-kpi-val { color: var(--amber); }
+.cap-card[data-accent="amber"] .cap-card-kpi-val { color: #c8851a; }
+.cap-card[data-accent="purple"] .cap-card-kpi-val { color: #534AB7; }
+.cap-card-kpi-lbl {
+  font-size: 0.68rem; font-weight: 500; color: var(--muted); line-height: 1.4;
+}
+.cap-card-dark .cap-card-kpi-lbl { color: rgba(255,255,255,0.45); }
 
-.cap-num {
-  font-size: 0.78rem; font-weight: 700; color: var(--muted);
-  letter-spacing: 0.06em; opacity: 0.4;
-  transition: opacity 0.2s;
-  padding-top: 0.15rem;
+@media (max-width: 900px) {
+  .about-main { grid-template-columns: 1fr; gap: 3rem; }
 }
-.cap-content { }
-.cap-title {
-  font-size: 1rem; font-weight: 700; color: var(--ink);
-  letter-spacing: -0.02em; line-height: 1.3; margin-bottom: 0.5rem;
-}
-.cap-desc {
-  font-size: 0.83rem; color: var(--muted); line-height: 1.78; max-width: 520px;
-}
-.cap-tools { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.7rem; }
-.cap-tool {
-  font-size: 0.68rem; font-weight: 500;
-  padding: 0.18rem 0.6rem; border-radius: 100px;
-  background: rgba(83,74,183,0.07); border: 1px solid rgba(83,74,183,0.18);
-  color: #3a3380;
-}
-.cap-metric {
-  text-align: left; padding-top: 0.1rem; flex-shrink: 0;
-}
-.cap-metric-val {
-  font-size: clamp(1.4rem, 2.5vw, 2rem);
-  font-weight: 800; letter-spacing: -0.04em; line-height: 1;
-}
-.cap-metric-sub {
-  font-size: 0.68rem; font-weight: 500; color: var(--muted);
-  margin-top: 0.25rem; line-height: 1.4; max-width: 120px;
-}
-
-@media (max-width: 780px) {
-  .cap-row { grid-template-columns: 40px 1fr; }
-  .cap-metric { display: none; }
+@media (max-width: 640px) {
+  .cap-grid { grid-template-columns: 1fr; }
+  .stats-grid .sg { padding: 0.85rem 1rem; }
 }
 
 /* ── CASOS ── */
@@ -984,6 +1213,7 @@ footer {
   50% { opacity: 0.55; }
 }
 
+
 /* ──────────────────────────────────────────────────
    RESPONSIVE — sistema completo de breakpoints
    1024 → tablet landscape / pequeño desktop
@@ -1003,7 +1233,7 @@ footer {
   /* Casos: cards con menos gap */
   .casos-grid { gap: 1rem; }
   /* About: columnas más proporcionales */
-  .about-hdr { gap: 2rem; }
+  .about-main { gap: 3rem; }
   /* Métricas: padding interior más ajustado */
   .mbar-cell { padding: 0 1.2rem; }
   .mbar-num { font-size: 2.5rem; }
@@ -1035,16 +1265,14 @@ footer {
   .nav-links a:not(.nav-cta) { display: none; }
   /* hero: foto más pequeña */
   .hero-photo-wrap { width: 120px; height: 120px; }
-  /* about: ajuste mobile */
-  .about-hdr { max-width: 100%; }
+  /* about: colapsa a columna */
+  .about-main { grid-template-columns: 1fr; gap: 2.5rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
   /* casos: una columna */
   .casos-grid { grid-template-columns: 1fr; }
   /* recos: una columna */
   .recos-grid { grid-template-columns: 1fr; }
   .reco-feat { grid-column: span 1; }
-  /* cap-metric: oculto en mobile */
-  .cap-row { grid-template-columns: 40px 1fr; }
-  .cap-metric { display: none; }
   /* trayectoria: una columna */
   .tray-wrap { grid-template-columns: 1fr; gap: 2rem; }
   /* pilares: una columna */
@@ -1106,8 +1334,7 @@ footer {
 
     <h1 class="hero-h1"><span class="h1-light">Diseño que escala</span><br><em>Liderazgo</em> que queda</h1>
 
-    <p class="hero-sub">Transformo organizaciones para escalar productos, personas y decisiones.</p>
-    <p class="hero-sub hero-sub-2">Lidero equipos interdisciplinarios combinando visión estratégica, governance de diseño e integración de IA con foco en conversión, satisfacción y eficiencia — reduciendo fricción y desperdicio en cada etapa del proceso.</p>
+    <p class="hero-sub">Construyo organizaciones de diseño que conectan producto, negocio y personas.</p>
 
 
   </div><!-- end hero-left -->
@@ -1117,13 +1344,9 @@ footer {
            onerror="this.style.display='none'">
     </div>
     <div class="hero-photo-name">Dulce Portas</div>
-    <div class="hero-photo-role">Design Leadership · Fintech & Banca Digital</div>
+    <div class="hero-photo-role">Head of Product Design · VP Design · CDO</div>
   </div>
   </div><!-- end hero-inner -->
-  <div class="scroll-cue">
-    <div class="scroll-cue-line"></div>
-    <div class="scroll-cue-lbl">Scroll</div>
-  </div>
 </section>
 
 <!-- ── METRICS BAR ── -->
@@ -1156,94 +1379,98 @@ footer {
 <section id="about">
   <div class="about-wrap">
 
-    <!-- Header: título dos tonos izquierda · bio izquierda derecha -->
-    <div class="about-hdr rv">
-      <div class="about-hdr-title">
+    <div class="about-main rv">
+
+      <!-- LEFT: eyebrow + título + bio + stats 2×2 + tags -->
+      <div class="about-left">
         <div class="s-eyebrow">Sobre mí</div>
-        <h2 style="margin-top:1rem">
-          <span class="about-title-line1">Estrategia, personas</span>
-          <span class="about-title-line2"><em>en una sola figura</em></span>
+        <h2 class="about-h2">
+          <span class="about-title-line1">No solo diseño productos</span>
+          <span class="about-title-line2">Diseño cómo los equipos <em>los construyen</em></span>
         </h2>
-      </div>
-      <div class="about-hdr-bio">
-        <p>Me formé como diseñadora gráfica en FADU-UBA, pero el salto a digital fue rápido e inevitable. Hoy mi especialización es en UX y desde hace más de 4 años lidero equipos que construyen productos financieros de alta escala.</p>
-        <p>La base en comunicación visual más la capa de producto y gestión logran un diferencial que se refleja en cómo diseño tanto el producto como el equipo.</p>
-      </div>
-    </div>
+        <p class="about-bio">Desde hace 10 años diseñando productos digitales y más de 4 liderando los equipos que los construyen. Me formé como diseñadora gráfica en FADU-UBA, pero el salto a digital fue rápido e inevitable. Hoy mi especialización es en Product Design y liderazgo de equipos, operando en la intersección de producto, negocio y personas.</p>
+        <p class="about-bio">La base en comunicación visual más la capa de producto y gestión logran un diferencial que se refleja en cómo diseño tanto el producto como el equipo.</p>
 
-    <!-- Tags -->
-    <div class="about-tags rv rv-d1">
-      <span class="at">Design Leadership</span>
-      <span class="at">DesignOps</span>
-      <span class="at">Estrategia de producto</span>
-      <span class="at">Governance</span>
-      <span class="at">Stakeholder Management</span>
-      <span class="at">UX Research</span>
-      <span class="at">Design Systems</span>
-      <span class="at">IA aplicada</span>
-      <span class="at">OKRs · SAFe · Agile</span>
-      <span class="at">Fintech & Banca</span>
-    </div>
-
-    <!-- Capabilities — lista editorial numerada -->
-    <div class="cap-list">
-
-      <div class="cap-row rv rv-d1">
-        <div class="cap-num">01</div>
-        <div class="cap-content">
-          <div class="cap-title">Gestión de la demanda</div>
-          <div class="cap-desc">Diseñé el proceso completo con mis pares UX Leads — evaluación, priorización, asignación y seguimiento — y construí la plataforma que lo sostenía. Comunicaciones, Legales y CX fueron algunas de las áreas que lo adoptaron con la misma lógica.</div>
-        </div>
-        <div class="cap-metric">
-          <div class="cap-metric-val" style="color:var(--teal)">+3</div>
-          <div class="cap-metric-sub">áreas que replicaron el modelo</div>
-        </div>
-      </div>
-
-      <div class="cap-row rv rv-d2">
-        <div class="cap-num">02</div>
-        <div class="cap-content">
-          <div class="cap-title">Procesos y formas de trabajo</div>
-          <div class="cap-desc">Estandaricé el proceso del equipo: scope de Product Design, criterios y marcos de referencia compartidos. Etapas y buenas prácticas que generan coherencia y autonomía real en cada decisión.</div>
-        </div>
-        <div class="cap-metric">
-          <div class="cap-metric-val" style="color:#c8851a">100%</div>
-          <div class="cap-metric-sub">del equipo con criterios propios</div>
-        </div>
-      </div>
-
-      <div class="cap-row rv rv-d3">
-        <div class="cap-num">03</div>
-        <div class="cap-content">
-          <div class="cap-title">Métricas operativas</div>
-          <div class="cap-desc">Implementé un sistema de seguimiento que medía lead time, SLA, esfuerzo estimado vs. real y costos del equipo. Medir la operación — no solo el producto — permite decisiones de capacidad con datos.</div>
-        </div>
-        <div class="cap-metric">
-          <div class="cap-metric-val" style="color:var(--teal)">SLA</div>
-          <div class="cap-metric-sub">medido, visible y accionable</div>
-        </div>
-      </div>
-
-      <div class="cap-row rv rv-d4">
-        <div class="cap-num">04</div>
-        <div class="cap-content">
-          <div class="cap-title">IA aplicada al equipo</div>
-          <div class="cap-desc">Integré IA al flujo nativo del equipo: Figma Make, MCP server y Claude como herramientas de diseño. Un agente researcher del brief al reporte y un agente de tono y voz que escaló a toda la organización.</div>
-          <div class="cap-tools">
-            <span class="cap-tool">Figma Make</span>
-            <span class="cap-tool">MCP server</span>
-            <span class="cap-tool">Claude</span>
-            <span class="cap-tool">Usuarios sintéticos</span>
+        <div class="about-tag-groups">
+          <div class="about-tag-group">
+            <span class="tag-group-label">Liderazgo</span>
+            <div class="tag-group-pills">
+              <span class="at">Design Leadership</span>
+              <span class="at">DesignOps</span>
+              <span class="at">Governance</span>
+              <span class="at">Stakeholder Management</span>
+            </div>
+          </div>
+          <div class="about-tag-group">
+            <span class="tag-group-label">Producto</span>
+            <div class="tag-group-pills">
+              <span class="at">Estrategia de producto</span>
+              <span class="at">UX Research</span>
+              <span class="at">Design Systems</span>
+            </div>
+          </div>
+          <div class="about-tag-group">
+            <span class="tag-group-label">Contexto & metodología</span>
+            <div class="tag-group-pills">
+              <span class="at">OKRs · SAFe · Agile</span>
+              <span class="at">IA aplicada</span>
+              <span class="at">Fintech & Banca</span>
+            </div>
           </div>
         </div>
-        <div class="cap-metric">
-          <div class="cap-metric-val" style="color:#534AB7">3+</div>
-          <div class="cap-metric-sub">agentes propios en producción</div>
+      </div>
+
+      <!-- RIGHT: capabilities grid 2×2 -->
+      <div class="about-right">
+        <div class="cap-grid">
+
+          <div class="cap-card rv rv-d1">
+            <span class="cap-card-bg-num">01</span>
+            <div class="cap-card-kpi">
+              <span class="cap-card-kpi-val" data-count="8" data-prefix="+">+8</span>
+              <span class="cap-card-kpi-lbl">áreas replicaron el modelo</span>
+            </div>
+            <div class="cap-card-title">Gestión de la demanda</div>
+            <div class="cap-card-desc">Construí junto a las UX Leads el proceso de evaluación, priorización y asignación. POs y líderes de portfolio lo adoptaron para gestionar solicitudes al equipo. Fue un antes y un después: replicamos el modelo capacitando a otras áreas de servicio para que gestionaran su propia demanda con la misma lógica.</div>
+          </div>
+
+          <div class="cap-card rv rv-d2" data-accent="amber">
+            <span class="cap-card-bg-num">02</span>
+            <div class="cap-card-kpi">
+              <span class="cap-card-kpi-val" data-count="100" data-suffix="%">100%</span>
+              <span class="cap-card-kpi-lbl">de autonomía ganada, no delegada</span>
+            </div>
+            <div class="cap-card-title">Formas de trabajo</div>
+            <div class="cap-card-desc">Definí el scope del equipo, criterios de calidad compartidos y una cadencia que generó coherencia sin perder velocidad. El resultado: un equipo que no espera validación para avanzar — opera con criterios propios, de forma eficiente y consistente.</div>
+          </div>
+
+          <div class="cap-card rv rv-d3">
+            <span class="cap-card-bg-num">03</span>
+            <div class="cap-card-kpi">
+              <span class="cap-card-kpi-val">SLA</span>
+              <span class="cap-card-kpi-lbl">medido, visible y defendible</span>
+            </div>
+            <div class="cap-card-title">Métricas operativas</div>
+            <div class="cap-card-desc">Diseñé un sistema de seguimiento con lead time, SLA y costo por entrega. Por primera vez, el equipo podía demostrar su impacto — y la organización, confiarle más.</div>
+          </div>
+
+          <div class="cap-card cap-card-dark rv rv-d4">
+            <span class="cap-card-bg-num">04</span>
+            <div class="cap-card-kpi">
+              <span class="cap-card-kpi-val" data-count="3" data-suffix="+">3+</span>
+              <span class="cap-card-kpi-lbl">agentes propios en producción</span>
+            </div>
+            <div class="cap-card-title">IA en el flujo de trabajo</div>
+            <div class="cap-card-desc">Figma Make, MCP server y Claude como herramientas nativas del equipo. Un agente researcher — del brief al reporte —, un agente de tono y voz en Copilot que escaló a toda la organización, y exploración con usuarios sintéticos en laboratorio.</div>
+            <div class="cap-card-tools">
+              <span>Figma Make</span><span>MCP</span><span>Claude</span><span>Copilot</span>
+            </div>
+          </div>
+
         </div>
       </div>
 
     </div>
-
   </div>
 </section>
 
@@ -1253,7 +1480,7 @@ footer {
     <div class="casos-top rv">
       <div>
         <div class="s-eyebrow">Casos de carrera</div>
-        <div class="s-title"><span class="t-muted">Momentos que</span><span class="t-teal"><em>me definieron</em></span></div>
+        <div class="s-title"><span class="t-muted">Problemas reales</span><span class="t-teal">soluciones que <em>perduran</em></span></div>
       </div>
       <p class="s-desc" style="max-width:300px">Cada uno representa un desafío real, un equipo y un impacto medible.</p>
     </div>
@@ -1711,12 +1938,16 @@ document.querySelectorAll('.rv').forEach(el => rvObs.observe(el));
 const capObs = new IntersectionObserver((entries) => {
   entries.forEach((e, i) => {
     if (e.isIntersecting) {
-      setTimeout(() => e.target.classList.add('v-in'), i * 100);
+      setTimeout(() => {
+        e.target.classList.add('v-in');
+        const kpiVal = e.target.querySelector('.cap-card-kpi-val[data-count]');
+        if (kpiVal) setTimeout(() => animateCount(kpiVal), 380);
+      }, i * 100);
       capObs.unobserve(e.target);
     }
   });
 }, { threshold: 0.1 });
-document.querySelectorAll('.cap-row').forEach(el => capObs.observe(el));
+document.querySelectorAll('.cap-card').forEach(el => capObs.observe(el));
 
 // Metrics bar counters (see animateCount below)
 const mbarObs = new IntersectionObserver((entries) => {
