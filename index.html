@@ -586,8 +586,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .nav-links a:not(.nav-cta) { display: none; }
   #hero { padding: 6rem 1.5rem 3rem; }
   .hero-inner { grid-template-columns: 1fr; gap: 1.75rem; text-align: center; }
-  .hero-right { order: -1; }
-  .hero-photo-wrap { width: 130px; height: 130px; }
+  .hero-right { order: -1; overflow: visible; }
+  .hero-photo-wrap { width: 130px; height: 130px; margin-bottom: 0.5rem; }
+  .hero-photo-wrap::before { inset: -10px; }
+  .hero-photo-wrap::after { width: 148px; height: 148px; }
+  .hero-photo-name { margin-top: 0.75rem; }
   .hero-left { text-align: left; }
   .hero-sub, .hero-sub-2 { max-width: 100%; }
   .hero-ctas { flex-wrap: wrap; }
@@ -595,12 +598,16 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .mbar-grid { grid-template-columns: 1fr 1fr; }
   .mbar-cell:nth-child(2) { border-right: none; }
   .mbar-cell:nth-child(1), .mbar-cell:nth-child(2) { border-bottom: 1px solid var(--border); padding-bottom: 2rem; }
+  .mbar-cell:nth-child(3) { border-right: 1px solid var(--border); }
   .about-main { grid-template-columns: 1fr; gap: 2.5rem; }
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .about-title-line2 { font-size: clamp(1.6rem, 6vw, 2.2rem); }
   .casos-grid { grid-template-columns: 1fr; }
   .tray-wrap { grid-template-columns: 1fr; gap: 2rem; }
   .c-btns { flex-wrap: wrap; gap: 1rem; }
+  .qs-btn { display: none; }
+  .qs-controls { justify-content: center; }
+  .qs-dots { justify-content: center; }
 }
 @media (max-width: 480px) {
   #about, #casos, #pilares, #trayectoria, #recos, #contacto { padding: 3rem 1.2rem; }
