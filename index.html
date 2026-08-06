@@ -385,44 +385,76 @@ body.loaded .hero-h1 em::after { width: 100%; }
 .casos-wrap { max-width: var(--max-w); margin: 0 auto; }
 .casos-top { display: flex; flex-direction: column; align-items: flex-start; gap: 0.75rem; margin-bottom: 3rem; }
 .casos-top > p.s-desc { max-width: 480px; }
-.casos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-@media (max-width: 720px) { .casos-grid { grid-template-columns: 1fr; } }
+.casos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; grid-auto-rows: 1fr; align-items: stretch; }
+.casos-grid .case-card { width: 100%; min-width: 0; }
+@media (max-width: 720px) { .casos-grid { grid-template-columns: 1fr; grid-auto-rows: auto; } }
 .case-card {
-  background: var(--bg); border: 1px solid var(--border); border-radius: 20px;
-  overflow: hidden; display: flex; flex-direction: column;
+  background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+  overflow: clip; display: flex; flex-direction: column;
   transition: box-shadow 0.35s ease, border-color 0.35s ease, transform 0.35s cubic-bezier(0.22,1,0.36,1);
 }
-.case-card:hover { box-shadow: 0 20px 60px rgba(0,0,0,0.08); transform: translateY(-4px); border-color: var(--border-mid); }
-.c-visual { height: 196px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 1.4rem 1.5rem; }
-.c-v1 { background: linear-gradient(140deg, #eef7f6 0%, #ddeee9 60%, #cce4de 100%); }
-.c-v2 { background: linear-gradient(140deg, #fef9ee 0%, #faf0d4 60%, #f5e6b2 100%); }
-.c-v3 { background: linear-gradient(140deg, #f0f7f6 0%, #e3efed 60%, #d4e8e4 100%); }
-.c-v4 { background: linear-gradient(140deg, #eef2ff 0%, #e4eaff 60%, #d6e0ff 100%); }
-.c-bg-num { position: absolute; top: -0.15em; right: 0.15em; font-size: 7.5rem; font-weight: 800; letter-spacing: -0.06em; line-height: 1; pointer-events: none; user-select: none; transition: transform 0.4s ease; }
-.c-v1 .c-bg-num { color: rgba(28,75,67,0.07); }
-.c-v2 .c-bg-num { color: rgba(237,179,60,0.13); }
-.c-v3 .c-bg-num { color: rgba(28,75,67,0.07); }
-.c-v4 .c-bg-num { color: rgba(50,80,200,0.06); }
-.case-card:hover .c-bg-num { transform: scale(1.04) translateY(-4px); }
-.c-phones { position: absolute; right: 1.8rem; top: 50%; transform: translateY(-50%); display: flex; gap: 0.5rem; align-items: flex-end; transition: transform 0.45s cubic-bezier(0.22,1,0.36,1); }
-.case-card:hover .c-phones { transform: translateY(calc(-50% - 7px)); }
-.c-phone { width: 50px; height: 84px; background: white; border-radius: 9px; border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 6px 22px rgba(0,0,0,0.1); overflow: hidden; padding: 5px 4px; display: flex; flex-direction: column; gap: 3px; flex-shrink: 0; }
-.c-phone-b { opacity: 0.55; transform: rotate(4deg) translateX(-8px); transition: transform 0.45s, opacity 0.45s; }
-.case-card:hover .c-phone-b { opacity: 0.75; transform: rotate(6deg) translateX(-5px); }
-.ph { height: 3px; border-radius: 2px; background: rgba(0,0,0,0.1); }
-.ph.ph-t { background: var(--teal); }
-.ph.ph-a { background: var(--amber); }
-.ph.w90 { width: 90%; }
-.ph.w70 { width: 70%; }
-.ph.w55 { width: 55%; }
-.ph-chart { height: 26px; background: rgba(28,75,67,0.05); border-radius: 3px; position: relative; overflow: hidden; flex-shrink: 0; }
-.ph-chart::after { content: ''; position: absolute; bottom:0; left:0; right:0; height:65%; background: linear-gradient(to right, rgba(28,75,67,0.08), rgba(28,75,67,0.18)); clip-path: polygon(0 100%,15% 70%,35% 78%,55% 38%,78% 52%,100% 15%,100% 100%); }
-.c-badge { position: relative; z-index: 2; font-size: 0.67rem; font-weight: 600; letter-spacing: 0.04em; color: var(--teal); background: rgba(28,75,67,0.08); border: 1px solid rgba(28,75,67,0.15); border-radius: 100px; padding: 0.2rem 0.7rem; }
-.c-v2 .c-badge { color: #7a5008; background: rgba(237,179,60,0.1); border-color: rgba(237,179,60,0.25); }
-.c-v4 .c-badge { color: #1e3fa0; background: rgba(50,80,200,0.07); border-color: rgba(50,80,200,0.15); }
+.case-card:hover { box-shadow: 0 24px 70px rgba(0,0,0,0.11); transform: translateY(-5px); border-color: var(--border-mid); }
+/* ── CASE CARD VISUAL — device mockup + impact data ── */
+.c-visual {
+  height: 260px; position: relative; overflow: hidden;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.75rem; border-radius: 20px 20px 0 0;
+}
+.c-v1 { background: linear-gradient(135deg, #0b2820 0%, #143d33 100%); }
+.c-v2 { background: linear-gradient(135deg, #170f00 0%, #2d1d00 100%); }
+.c-v3 { background: linear-gradient(135deg, #06100c 0%, #0f2018 100%); }
+.c-v4 { background: linear-gradient(135deg, #080c1a 0%, #10183a 100%); }
+/* Left: category + name + KPI */
+.c-vis-left { display: flex; flex-direction: column; gap: 0.4rem; z-index: 2; flex: 1; min-width: 0; overflow: hidden; }
+.c-vis-cat { font-size: 0.6rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.c-vis-name { font-size: clamp(1.25rem, 2.8vw, 1.6rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.25; color: white; }
+.c-vis-kpi { display: flex; align-items: baseline; gap: 0.3rem; margin-top: 0.5rem; }
+.c-vis-kpi-n { font-size: clamp(2.2rem, 5vw, 3.2rem); font-weight: 900; letter-spacing: -0.06em; line-height: 1; color: var(--amber); }
+.c-vis-kpi-l { font-size: 0.72rem; font-weight: 700; color: rgba(237,179,60,0.5); text-transform: uppercase; letter-spacing: 0.06em; }
+/* Mockup image — sin frame CSS */
+.c-mockup-img {
+  flex-shrink: 0;
+  height: 240px;
+  width: auto;
+  object-fit: contain;
+  object-position: bottom right;
+  margin-top: -10px;
+  margin-bottom: -20px;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+}
+.case-card:hover .c-mockup-img { transform: translateY(-8px); }
+/* Device mockup */
+.c-device {
+  position: relative; flex-shrink: 0;
+  width: 112px; height: 228px;
+  background: #181818;
+  border-radius: 20px;
+  padding: 8px;
+  box-shadow:
+    0 0 0 1.5px #2c2c2c,
+    0 28px 70px rgba(0,0,0,0.7),
+    0 6px 20px rgba(0,0,0,0.45),
+    inset 0 0 0 1px rgba(255,255,255,0.07);
+  transition: transform 0.5s cubic-bezier(0.22,1,0.36,1);
+  margin-top: -20px;
+}
+.case-card:hover .c-device { transform: translateY(-10px); }
+.c-device::before {
+  content: ''; position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
+  width: 38px; height: 5px; background: #181818; border-radius: 0 0 5px 5px; z-index: 3;
+}
+.c-device-screen {
+  width: 100%; height: 100%;
+  border-radius: 14px; overflow: hidden; background: #000;
+}
+.c-device-screen img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top; display: block;
+}
 .c-body { padding: 1.4rem 1.6rem 1rem; flex: 1; }
-.c-emotion { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: var(--amber); display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.45rem; }
-.c-emotion::before { content: ''; width: 10px; height: 1.5px; background: var(--amber); border-radius: 2px; flex-shrink: 0; }
+.c-emotion { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.09em; text-transform: uppercase; color: #7a6820; display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.45rem; }
+.c-emotion::before { content: ''; width: 10px; height: 1.5px; background: #7a6820; border-radius: 2px; flex-shrink: 0; }
 .c-title { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); line-height: 1.28; margin-bottom: 0.55rem; }
 .c-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.72; }
 .c-metrics { display: flex; gap: 0; border-top: 1px solid var(--border); }
@@ -546,7 +578,7 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
 .hchip:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(0,0,0,0.09); }
 .s-eyebrow::before { width: 0; transition: width 0.7s cubic-bezier(0.22,1,0.36,1) 0.2s; }
 .v-in .s-eyebrow::before, .rv.v-in .s-eyebrow::before { width: 18px; }
-.c-visual { overflow: hidden; }
+/* .c-visual overflow already set above */
 .c-visual::after { content: ''; position: absolute; top: 0; left: -80%; width: 45%; height: 100%; pointer-events: none; z-index: 4; background: linear-gradient(105deg, transparent 25%, rgba(255,255,255,0.16) 50%, transparent 75%); transform: skewX(-14deg); transition: left 0s; }
 .case-card:hover .c-visual::after { left: 140%; transition: left 0.65s cubic-bezier(0.4,0,0.2,1); }
 .c-mval { transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), color 0.25s; }
@@ -583,6 +615,8 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
   .contacto-grid { gap: 2rem; }
 }
 @media (max-width: 640px) {
+  .casos-grid { grid-auto-rows: auto; }
+  .c-mockup-img { max-width: 48%; height: auto; max-height: 220px; }
   .nav-links a:not(.nav-cta) { display: none; }
   #hero { padding: 6rem 1.5rem 3rem; }
   .hero-inner { grid-template-columns: 1fr; gap: 1.75rem; text-align: center; }
@@ -783,16 +817,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       <!-- CASO 1 -->
       <div class="case-card rv rv-d1">
         <div class="c-visual c-v1">
-          <div class="c-bg-num">01</div>
-          <div class="c-phones">
-            <div class="c-phone c-phone-b">
-              <div class="ph w90"></div><div class="ph ph-t w70"></div><div class="ph-chart"></div><div class="ph w55"></div>
-            </div>
-            <div class="c-phone">
-              <div class="ph w90"></div><div class="ph ph-t"></div><div class="ph-chart"></div><div class="ph w90"></div><div class="ph ph-a w55"></div>
-            </div>
+          <div class="c-vis-left">
+            <div class="c-vis-cat">UX Lead → Manager · Fintech</div>
+            <div class="c-vis-name">Inversiones<br>SPV × IOL</div>
           </div>
-          <div class="c-badge">UX Lead → Manager · Fintech</div>
+          <img src="spv x iol.png" alt="IOL" class="c-mockup-img">
         </div>
         <div class="c-body">
           <div class="c-emotion">El desafío que me hizo Manager</div>
@@ -814,20 +843,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       <!-- CASO 2 -->
       <div class="case-card rv rv-d2">
         <div class="c-visual c-v2">
-          <div class="c-bg-num">02</div>
-          <div class="c-phones">
-            <div class="c-phone c-phone-b">
-              <div class="ph w90"></div><div class="ph ph-a w70"></div>
-              <div class="ph" style="height:18px;background:rgba(237,179,60,.1);border-radius:3px;width:90%"></div>
-              <div class="ph ph-a w55"></div>
-            </div>
-            <div class="c-phone">
-              <div class="ph w90"></div><div class="ph ph-a"></div>
-              <div class="ph" style="height:22px;background:rgba(237,179,60,.08);border-radius:3px;width:90%"></div>
-              <div class="ph ph-a w55"></div>
-            </div>
+          <div class="c-vis-left">
+            <div class="c-vis-cat">Product Design Manager · Lending</div>
+            <div class="c-vis-name">Préstamos<br>Supervielle</div>
           </div>
-          <div class="c-badge">Product Design Manager · Lending</div>
+          <img src="prestamos.png" alt="Préstamos" class="c-mockup-img">
         </div>
         <div class="c-body">
           <div class="c-emotion">El salto de rol</div>
@@ -849,21 +869,11 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       <!-- CASO 3 -->
       <div class="case-card rv rv-d3">
         <div class="c-visual c-v3">
-          <div class="c-bg-num">03</div>
-          <div class="c-phones">
-            <div class="c-phone c-phone-b">
-              <div class="ph w90"></div><div class="ph ph-t w65"></div>
-              <div class="ph" style="height:8px;background:rgba(28,75,67,.07);border-radius:2px;width:90%"></div>
-              <div class="ph" style="height:8px;background:rgba(28,75,67,.05);border-radius:2px;width:90%"></div>
-            </div>
-            <div class="c-phone">
-              <div class="ph w90"></div><div class="ph ph-t"></div>
-              <div class="ph" style="height:8px;background:rgba(28,75,67,.07);border-radius:2px;width:90%"></div>
-              <div class="ph" style="height:8px;background:rgba(28,75,67,.05);border-radius:2px;width:90%"></div>
-              <div class="ph ph-a w55"></div>
-            </div>
+          <div class="c-vis-left">
+            <div class="c-vis-cat">Product Strategy · C-Level</div>
+            <div class="c-vis-name">Ecosistema<br>App 4.0</div>
           </div>
-          <div class="c-badge">PDM · Estrategia de producto</div>
+          <img src="app.png" alt="App 4.0" class="c-mockup-img">
         </div>
         <div class="c-body">
           <div class="c-emotion">La carta al CEO</div>
@@ -885,37 +895,25 @@ footer { background: var(--ink); border-top: 1px solid rgba(255,255,255,0.06); p
       <!-- CASO 4 -->
       <div class="case-card rv rv-d4">
         <div class="c-visual c-v4">
-          <div class="c-bg-num">04</div>
-          <div style="position:absolute;right:1.8rem;top:50%;transform:translateY(-50%)">
-            <svg width="86" height="76" viewBox="0 0 86 76" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="43" cy="18" r="9" fill="rgba(28,75,67,0.1)" stroke="rgba(28,75,67,0.25)" stroke-width="1.5"/>
-              <circle cx="16" cy="52" r="7" fill="rgba(237,179,60,0.12)" stroke="rgba(237,179,60,0.35)" stroke-width="1.5"/>
-              <circle cx="70" cy="52" r="7" fill="rgba(50,80,200,0.09)" stroke="rgba(50,80,200,0.28)" stroke-width="1.5"/>
-              <circle cx="43" cy="67" r="5" fill="rgba(28,75,67,0.06)" stroke="rgba(28,75,67,0.18)" stroke-width="1"/>
-              <line x1="43" y1="27" x2="16" y2="45" stroke="rgba(28,75,67,0.18)" stroke-width="1" stroke-dasharray="3,2.5"/>
-              <line x1="43" y1="27" x2="70" y2="45" stroke="rgba(50,80,200,0.18)" stroke-width="1" stroke-dasharray="3,2.5"/>
-              <line x1="16" y1="59" x2="43" y2="62" stroke="rgba(28,75,67,0.12)" stroke-width="1" stroke-dasharray="2,2"/>
-              <line x1="70" y1="59" x2="43" y2="62" stroke="rgba(50,80,200,0.12)" stroke-width="1" stroke-dasharray="2,2"/>
-              <text x="37" y="21" font-size="5.5" fill="rgba(28,75,67,0.55)" font-weight="700" font-family="Inter,sans-serif">MCP</text>
-              <text x="9" y="54" font-size="5" fill="rgba(150,100,0,0.6)" font-weight="600" font-family="Inter,sans-serif">Figma</text>
-              <text x="63" y="54" font-size="5" fill="rgba(50,80,200,0.55)" font-weight="600" font-family="Inter,sans-serif">AI</text>
-            </svg>
+          <div class="c-vis-left">
+            <div class="c-vis-cat">DesignOps · AI</div>
+            <div class="c-vis-name" style="font-size:clamp(1rem,2.2vw,1.35rem);">IA como<br>infraestructura</div>
           </div>
-          <div class="c-badge">DesignOps · AI</div>
+          <img src="ia-sistema.png" alt="IA Sistema" class="c-mockup-img">
         </div>
         <div class="c-body">
-          <div class="c-emotion" style="color:#7a6820">La nueva forma de trabajar</div>
-          <div class="c-title">MCP × Figma — IA en el flujo de diseño</div>
-          <div class="c-desc">Lideré la adopción del MCP Server de Figma en el banco. Formé al equipo, definí flujos de trabajo y redefiní el pipeline de diseño a desarrollo. Pionera en banca.</div>
+          <div class="c-emotion">De herramienta a infraestructura</div>
+          <div class="c-title">IA como infraestructura de diseño</div>
+          <div class="c-desc">Tres programas de IA en producción: agente de contenido UX sobre Copilot, MCP × Figma para el pipeline diseño→dev, y research agent para autonomía del equipo. Pionera en banca argentina.</div>
         </div>
         <div class="c-metrics c-v4">
-          <div class="c-met"><div class="c-mval">14</div><div class="c-mlab">personas formadas</div></div>
-          <div class="c-met"><div class="c-mval">6</div><div class="c-mlab">integraciones 2026</div></div>
-          <div class="c-met"><div class="c-mval" style="font-size:1rem">D→Dev</div><div class="c-mlab">pipeline nuevo</div></div>
+          <div class="c-met"><div class="c-mval">−30%</div><div class="c-mlab">tiempo de diseño</div></div>
+          <div class="c-met"><div class="c-mval">100%</div><div class="c-mlab">adopción</div></div>
+          <div class="c-met"><div class="c-mval">6</div><div class="c-mlab">agentes integrados</div></div>
         </div>
         <div class="c-footer">
           <div class="c-tags">
-            <span class="ctag">AI / MCP</span><span class="ctag">DesignOps</span><span class="ctag">Figma</span>
+            <span class="ctag">Copilot</span><span class="ctag">MCP × Figma</span><span class="ctag">Research AI</span>
           </div>
           <a href="caso-04-mcp.html" class="c-link">Ver caso <span class="c-link-arr">→</span></a>
         </div>
